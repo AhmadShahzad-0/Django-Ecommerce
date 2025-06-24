@@ -1,0 +1,62 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">LOGIN...</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Login To Your Account...</p>
+        </div>
+    </div>
+</header>
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100 bg-light">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-lg rounded-4 border-0 transition scale hover-shadow">
+            <div class="card-body p-4">
+                <h3 class="text-center text-secondary mb-4">Welcome Back</h3>
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="username" class="form-label text-muted">Username</label>
+                        <input type="text" class="form-control form-control-lg rounded-pill shadow-sm" name="username" id="username" placeholder="Enter Your Username">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="password" class="form-label text-muted">Password</label>
+                        <input type="password" class="form-control form-control-lg rounded-pill shadow-sm" name="password" id="password" placeholder="Enter Your Password">
+                    </div>
+                    
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-secondary btn-lg rounded-pill shadow-sm">Login</button>
+                    </div>
+                </form>
+                <br><br>
+                <br><br>
+                <br><br>
+                <br><br>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Add hover scale effect to card
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.classList.add('shadow-xl');
+            card.style.transform = 'scale(1.02)';
+            card.style.transition = 'all 0.3s ease-in-out';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.classList.remove('shadow-xl');
+            card.style.transform = 'scale(1)';
+        });
+    });
+</script>
+
+{% endblock %}
