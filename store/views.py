@@ -6,12 +6,33 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm
+from .forms import SignUpForm, UpdateUserForm
 from django import forms
 
 
-
 # Create your views here.
+
+def update_user(request):
+    if request.user.is_authenticated:
+        current_user = User.objects.get(id=request.user.id)  # Get the current user
+        user_form = UpdateUserForm(request.POST or None, instance=current_user)  # Create a form instance with the current user data
+        if user_form.is_valid():
+            user_form.save()
+
+            login(request, current_user)  # Re-login the user to update session data
+            # Display a success message
+            messages.success(request, "Your profile has been updated successfully.")
+            return redirect('home')
+        return render(request, 'store/update_user.html', {'user_form': user_form})
+    else:
+        messages.error(request, "You need to be logged in to update your profile.")
+        return redirect('login')
+        # return render(request, 'store/update_user.html', {'form': form})
+
+def category_summary(request):
+    categories = Category.objects.all()  # Fetch all categories from the database
+    return render(request, 'store/category_summary.html', {'categories': categories})  # path relative to templates/
+
 def category(request, foo):
     #Replace Hyphens with spaces in the category name
     foo = foo.replace('-', ' ')

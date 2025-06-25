@@ -1,0 +1,44 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Categories</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Check out our categories below:</p>
+        </div>
+    </div>
+</header>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for category in categories %}
+                <div class="col">
+                    <a href="{% url 'category' category.name %}" class="text-decoration-none">
+                        <div class="card border-0 shadow-sm bg-secondary bg-opacity-10 text-secondary text-center h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ category.name }}</h5>
+                            </div>
+                            <div class="card-footer bg-transparent border-0">
+                                <small class="text-muted">Explore {{ category.name }}</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>
+                <br><br>
+                <br><br>
+                <br><br>
+                <br><br>
+                <br><br>
+
+{% endblock %}

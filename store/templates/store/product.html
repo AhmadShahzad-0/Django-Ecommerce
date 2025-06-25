@@ -4,58 +4,64 @@
 
 
 
-<div class="container">
-    <br>
-    <div class="card mb-3">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+<div class="container my-5">
+    <div class="card border-0 shadow-lg">
+        <div class="row g-0 align-items-center">
+            <!-- Product Image -->
+            <div class="col-md-5">
+                <img src="{{ product.image.url }}" class="img-fluid rounded-start w-100 h-100 object-fit-cover" alt="{{ product.name }}">
             </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <center>
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">{{ product.category }} <br> {{ product.description }}</p>
 
+            <!-- Product Details -->
+            <div class="col-md-7">
+                <div class="card-body p-4">
+                    <h3 class="card-title fw-bold text-center mb-3">{{ product.name }}</h3>
+
+                    <p class="text-center text-muted mb-4">
+                        {{ product.category }}<br>
+                        <span class="small">{{ product.description }}</span>
+                    </p>
+
+                    <!-- Product Price -->
+                    <div class="text-center mb-4">
                         {% if product.is_on_sale %}
-                        <!-- Product price-->
-                        <strike>
-                            ${{product.price}}
-                        </strike>
-                        &nbsp;
-                        <span class="text-danger">${{product.sale_price}}</span>
-                        <br>
-
+                            <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
+                            <span class="text-danger fw-semibold ms-2">${{ product.sale_price }}</span>
                         {% else %}
-                        <!-- Product price-->
-                        ${{product.price}}
-                        <br>
+                            <span class="fw-semibold">${{ product.price }}</span>
                         {% endif %}
-                        <br>
-                        <div class="row justify-content-center">
-                            <div class="col-md-2">Quantity :</div>
-                            <div class="col-md-2">
-                        <select class="form-select form-select-sm" id="qty-cart">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                            </div>
+                    </div>
+
+                    <!-- Quantity Selector -->
+                    <div class="row justify-content-center align-items-center mb-4">
+                        <div class="col-auto">
+                            <label for="qty-cart" class="col-form-label fw-semibold">Quantity:</label>
                         </div>
-                        <br>
+                        <div class="col-auto">
+                            <select class="form-select form-select-sm" id="qty-cart">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
 
-                        <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
-                        <button type="button" value="{{ product.id }}" class="btn btn-secondary" id="add-cart">Add To
-                            Cart</button>
+                    <!-- Action Buttons -->
+                    <div class="text-center">
+                        <a href="{% url 'home' %}" class="btn btn-outline-secondary me-2">Home</a>
+                        <button type="button" value="{{ product.id }}" class="btn btn-dark" id="add-cart">
+                            Add To Cart
+                        </button>
+                    </div>
 
-                    </center>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br>
 
@@ -75,6 +81,7 @@
             success: function(json){
                 //console.log(json);
                 document.getElementById("cart_quantity").textContent = json.qty
+                location.reload();
             },
             error: function(xhr, errmsg, err){
                 console.error("AJAX error:", errmsg);
