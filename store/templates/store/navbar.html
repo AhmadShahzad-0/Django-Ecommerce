@@ -34,15 +34,30 @@
                 {% endif %}
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle fw-semibold" id="navbarDropdown" href="#" role="button"
+                    <a class="nav-link dropdown-toggle fw-semibold text-dark" id="navbarDropdown" href="#" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         Categories
                     </a>
-                    <ul class="dropdown-menu animate__animated animate__fadeIn" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{% url 'category_summary' %}">All Products</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="{% url 'category' "Men's-Perfume" %}">Men's Perfume</a></li>
-                        <li><a class="dropdown-item" href="{% url 'category' "Women's-Perfume" %}">Women's Perfume</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end p-2 border-0 shadow-lg rounded-4 animate__animated animate__fadeIn"
+                        aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item rounded-2 px-3 py-2" href="{% url 'category_summary' %}">
+                                🛍️ All Products
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider" />
+                        </li>
+                        <li>
+                            <a class="dropdown-item rounded-2 px-3 py-2" href="{% url 'category' "Men's-Perfume" %}">
+                                👔 Men's Perfume
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item rounded-2 px-3 py-2" href="{% url 'category' "Women's-Perfume" %}">
+                                💄 Women's Perfume
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
