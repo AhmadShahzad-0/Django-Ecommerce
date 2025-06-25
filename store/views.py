@@ -6,11 +6,39 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm, UpdateUserForm
+from .forms import SignUpForm, UpdateUserForm, PasswordChangeForm
 from django import forms
 
 
 # Create your views here.
+
+def update_password(request):
+    if request.user.is_authenticated:
+        current_user = request.user  # Get the current user
+        # Did they fill out the form?
+        if request.method == 'POST':
+            form = PasswordChangeForm(current_user, request.POST)  # Create a form instance with the current user
+            # Is the form valid?
+            if form.is_valid():
+                form.save()
+                # Re-login the user to update session data
+                messages.success(request, "Your password has been updated successfully.")
+                login(request, current_user)  # Re-login the user to update session data
+                return redirect('home')
+            
+            else:
+                for error in list(form.errors.values()):
+                    messages.error(request, error)
+                    return render(request, 'store/update_password.html', {'form': form})
+
+        else:
+            form = PasswordChangeForm(current_user)
+            return render(request, 'store/update_password.html', {'form': form})
+
+    else:
+        messages.error(request, "You need to be logged in to change your password.")
+        return redirect('login')
+        # return render(request, 'store/update_password.html', {'form': form})                
 
 def update_user(request):
     if request.user.is_authenticated:
