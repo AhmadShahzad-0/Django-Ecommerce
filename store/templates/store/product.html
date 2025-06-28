@@ -5,65 +5,111 @@
 
 
 <div class="container my-5">
-    <div class="card border-0 shadow-lg">
-        <div class="row g-0 align-items-center">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+        <div class="row g-0">
+            
             <!-- Product Image -->
-            <div class="col-md-5">
-                <img src="{{ product.image.url }}" class="img-fluid rounded-start w-100 h-100 object-fit-cover" alt="{{ product.name }}">
+            <div class="col-md-6 bg-light">
+                <img src="{{ product.image.url }}" class="img-fluid w-100 h-100 object-fit-cover" alt="{{ product.name }}"
+                     style="max-height: 550px; object-fit: cover;">
             </div>
 
             <!-- Product Details -->
-            <div class="col-md-7">
-                <div class="card-body p-4">
-                    <h3 class="card-title fw-bold text-center mb-3">{{ product.name }}</h3>
+            <div class="col-md-6 p-5 d-flex flex-column justify-content-center">
+                <div class="mb-4 text-center">
+                    <h2 class="fw-bold">{{ product.name }}</h2>
+                    <p class="text-muted mb-1">{{ product.category }}</p>
+                    <p class="small text-secondary">{{ product.description }}</p>
+                </div>
 
-                    <p class="text-center text-muted mb-4">
-                        {{ product.category }}<br>
-                        <span class="small">{{ product.description }}</span>
-                    </p>
+                <!-- Price -->
+                <div class="text-center mb-4">
+                    {% if product.is_on_sale %}
+                        <span class="text-muted text-decoration-line-through fs-5">${{ product.price }}</span>
+                        <span class="text-danger fw-semibold fs-4 ms-2">${{ product.sale_price }}</span>
+                    {% else %}
+                        <span class="fw-bold fs-4">${{ product.price }}</span>
+                    {% endif %}
+                </div>
 
-                    <!-- Product Price -->
-                    <div class="text-center mb-4">
-                        {% if product.is_on_sale %}
-                            <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
-                            <span class="text-danger fw-semibold ms-2">${{ product.sale_price }}</span>
-                        {% else %}
-                            <span class="fw-semibold">${{ product.price }}</span>
-                        {% endif %}
-                    </div>
+                <!-- Quantity Selector -->
+                <div class="d-flex justify-content-center align-items-center mb-4">
+                    <label for="qty-cart" class="me-2 fw-semibold">Quantity:</label>
+                    <select class="form-select form-select-sm w-auto" id="qty-cart">
+                        {% for i in "12345"|make_list %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-                    <!-- Quantity Selector -->
-                    <div class="row justify-content-center align-items-center mb-4">
-                        <div class="col-auto">
-                            <label for="qty-cart" class="col-form-label fw-semibold">Quantity:</label>
-                        </div>
-                        <div class="col-auto">
-                            <select class="form-select form-select-sm" id="qty-cart">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="text-center">
-                        <a href="{% url 'home' %}" class="btn btn-outline-secondary me-2">Home</a>
-                        <button type="button" value="{{ product.id }}" class="btn btn-dark" id="add-cart">
-                            Add To Cart
-                        </button>
-                    </div>
-
+                <!-- Action Buttons -->
+                <div class="text-center">
+                    <a href="{% url 'home' %}" class="btn btn-outline-secondary me-2 px-4 py-2 rounded-pill">
+                        <i class="bi bi-house-door me-1"></i> Home
+                    </a>
+                    <button type="button" value="{{ product.id }}" class="btn btn-dark px-4 py-2 rounded-pill" id="add-cart">
+                        <i class="bi bi-cart-plus me-1"></i> Add To Cart
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br>
+<!-- Enhanced Static Description Section -->
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="p-4 p-md-5 rounded-4 shadow-lg bg-light bg-opacity-75 border">
+                <h4 class="fw-bold mb-3 text-center text-dark">Why You'll Love This Product</h4>
+                <p class="text-secondary text-center mb-4 fs-6">
+                    Crafted with attention to detail and built using top-grade materials, this product delivers on both performance and elegance.
+                    Perfect for daily use or as a thoughtful gift.
+                </p>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-start">
+                            <i class="bi bi-check-circle-fill text-success fs-5 me-3"></i>
+                            <div>
+                                <h6 class="fw-semibold mb-1">Premium Build</h6>
+                                <small class="text-muted">Engineered with top-tier materials for long-term durability.</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-start">
+                            <i class="bi bi-check-circle-fill text-success fs-5 me-3"></i>
+                            <div>
+                                <h6 class="fw-semibold mb-1">Comfort & Style</h6>
+                                <small class="text-muted">Designed to match your lifestyle while offering unmatched comfort.</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-start">
+                            <i class="bi bi-check-circle-fill text-success fs-5 me-3"></i>
+                            <div>
+                                <h6 class="fw-semibold mb-1">Fast Delivery</h6>
+                                <small class="text-muted">Enjoy quick and reliable shipping across the country.</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-start">
+                            <i class="bi bi-check-circle-fill text-success fs-5 me-3"></i>
+                            <div>
+                                <h6 class="fw-semibold mb-1">Trusted by Customers</h6>
+                                <small class="text-muted">Rated highly by thousands of satisfied users worldwide.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script>
     // Check if Button Pressed
@@ -79,9 +125,14 @@
                 'action': 'post'
             },
             success: function(json){
-                //console.log(json);
-                document.getElementById("cart_quantity").textContent = json.qty
-                location.reload();
+                // Update cart badge
+                const badge = document.getElementById("cart_quantity");
+                badge.textContent = json.qty;
+
+                // Bounce effect
+                badge.classList.remove("bounce");
+                void badge.offsetWidth;
+                badge.classList.add("bounce");
             },
             error: function(xhr, errmsg, err){
                 console.error("AJAX error:", errmsg);
@@ -89,6 +140,7 @@
         });
     });
 </script>
+
 
 
 {% endblock %}

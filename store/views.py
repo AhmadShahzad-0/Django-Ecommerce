@@ -70,7 +70,7 @@ def category(request, foo):
         products = Product.objects.filter(category=category)  # Fetch products in that category
         return render(request, 'store/category.html', {'products': products, 'category': category})
     except:
-        messages.success(request, ("That Category Doesn't Exist."))
+        messages.error(request, ("That Category Doesn't Exist."))
         return redirect('home')
 
 def product(request, pk):

@@ -1,76 +1,77 @@
-<!-- Modern Bootstrap 5 Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm sticky-top">
-    <div class="container px-4 px-lg-5">
-        <a class="navbar-brand fw-bold fs-4 text-dark" href="{% url 'home' %}">Ecom</a>
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<!-- Sleek Bootstrap 5 Navbar -->
+<nav class="navbar navbar-expand-lg navbar-white bg-white border-bottom shadow-sm sticky-top py-3">
+  <div class="container-fluid px-4 px-lg-5">
+    
+    <!-- Brand Logo / Name -->
+    <a class="navbar-brand fw-bold fs-3 text-dark" href="{% url 'home' %}">Ecom</a>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item">
-                    <a class="nav-link active fw-semibold" aria-current="page" href="{% url 'home' %}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-semibold" href="{% url 'about' %}">About</a>
-                </li>
+    <!-- Toggle for mobile -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+      aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-                {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link fw-semibold" href="{% url 'update_user' %}">Update Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-semibold" href="{% url 'logout' %}">Logout</a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link fw-semibold" href="{% url 'login' %}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-semibold" href="{% url 'register' %}">Register</a>
-                </li>
-                {% endif %}
+    <!-- Navbar Content -->
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      
+      <!-- Left Side Links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 gap-lg-3">
+        <li class="nav-item">
+          <a class="nav-link fw-semibold text-dark" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-semibold text-dark" href="{% url 'about' %}">About</a>
+        </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle fw-semibold text-dark" id="navbarDropdown" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Categories
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end p-2 border-0 shadow-lg rounded-4 animate__animated animate__fadeIn"
-                        aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item rounded-2 px-3 py-2" href="{% url 'category_summary' %}">
-                                🛍️ All Products
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider" />
-                        </li>
-                        <li>
-                            <a class="dropdown-item rounded-2 px-3 py-2" href="{% url 'category' "Men's-Perfume" %}">
-                                👔 Men's Perfume
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item rounded-2 px-3 py-2" href="{% url 'category' "Women's-Perfume" %}">
-                                💄 Women's Perfume
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link text-dark fw-semibold" href="{% url 'update_user' %}">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark fw-semibold" href="{% url 'logout' %}">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link text-dark fw-semibold" href="{% url 'login' %}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark fw-semibold" href="{% url 'register' %}">Register</a>
+        </li>
+        {% endif %}
 
-            <div class="d-flex">
-                <a href="{% url 'cart_summary' %}" class="btn btn-outline-dark position-relative">
-                    <i class="bi bi-cart-fill me-1"></i>
-                    Cart
-                    <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">
-                        {{ cart|length }}
-                    </span>
-                </a>
-            </div>
-        </div>
+        <!-- Dropdown for Categories -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold text-dark" href="#" id="categoriesDropdown" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Categories
+          </a>
+          <ul class="dropdown-menu shadow-sm border-0 rounded-3 animate__animated animate__fadeIn"
+            aria-labelledby="categoriesDropdown">
+            <li>
+              <a class="dropdown-item px-3 py-2" href="{% url 'category_summary' %}">🛍️ All Products</a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item px-3 py-2" href="{% url 'category' "Men's-Perfume" %}">👔 Men's Perfume</a>
+            </li>
+            <li>
+              <a class="dropdown-item px-3 py-2" href="{% url 'category' "Women's-Perfume" %}">💄 Women's Perfume</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- Right Side Cart Button -->
+<div class="d-flex align-items-center">
+  <a href="{% url 'cart_summary' %}" class="btn btn-dark rounded-pill px-4 py-2">
+    <i class="bi bi-cart-fill me-2"></i>
+    Cart
+    <span id="cart_quantity" class="badge bg-light text-dark ms-2 rounded-pill">
+      {{ cart|length }}
+    </span>
+  </a>
+</div>
+
     </div>
+  </div>
 </nav>

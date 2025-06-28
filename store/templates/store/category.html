@@ -1,61 +1,62 @@
 {% extends 'store/base.html' %}
 
 {% block content %}
-    <!-- Header-->
-    <header class="bg-dark py-5">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">{{ category }}</h1>
-                <p class="lead fw-normal text-white-50 mb-0">Category Page</p>
-            </div>
+<!-- Header -->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">{{ category }}</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Browse our collection</p>
         </div>
-    </header>
-    <!-- Section-->
-  <section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    </div>
+</header>
+
+<!-- Product Cards Section -->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-4">
+        <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 justify-content-center">
 
             {% for product in products %}
             <div class="col mb-5">
-                <div class="card h-100 border-0 shadow-sm"
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden"
                      style="transition: transform 0.3s, box-shadow 0.3s;"
                      onmouseover="this.style.transform='scale(1.03)'; this.classList.add('shadow-lg')"
                      onmouseout="this.style.transform='scale(1)'; this.classList.remove('shadow-lg')">
 
                     {% if product.is_on_sale %}
-                    <!-- Sale badge-->
-                    <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
+                    <!-- Sale badge -->
+                    <span class="badge bg-danger text-white position-absolute m-2 px-3 py-1 fs-6 rounded-pill" style="z-index: 1; top: 10px; right: 10px;">
                         Sale
-                    </div>
+                    </span>
                     {% endif %}
 
-                    <!-- Product image-->
-                    <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}" />
+                    <!-- Product Image -->
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}"
+                         style="height: 250px; object-fit: cover;">
 
-                    <!-- Product details-->
-                    <div class="card-body px-3 py-4">
-                        <div class="text-center">
-                            <h5 class="fw-bold mb-2">{{ product.name }}</h5>
+                    <!-- Product Info -->
+                    <div class="card-body text-center px-3 py-4">
+                        <h5 class="fw-bold mb-2">{{ product.name }}</h5>
 
-                            {% if product.is_on_sale %}
-                            <div>
-                                <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
-                                <span class="text-danger fw-semibold ms-2">${{ product.sale_price }}</span>
-                            </div>
-                            {% else %}
-                            <div class="fw-semibold">${{ product.price }}</div>
-                            {% endif %}
-
-                            <small class="text-muted d-block mt-1">{{ product.category }}</small>
+                        {% if product.is_on_sale %}
+                        <div class="mb-1">
+                            <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
+                            <span class="text-danger fw-semibold ms-2">${{ product.sale_price }}</span>
                         </div>
+                        {% else %}
+                        <div class="fw-semibold mb-1">${{ product.price }}</div>
+                        {% endif %}
+
+                        <small class="text-muted">{{ product.category }}</small>
                     </div>
 
-                    <!-- Product actions-->
-                    <div class="card-footer bg-white border-0 text-center pt-0 pb-4">
-                        <a class="btn btn-outline-dark mt-auto" href="{% url 'product' product.id %}">
-                            View Product
-                        </a>
-                    </div>
+                    <!-- CTA Button -->
+                    <!-- CTA Button -->
+<div class="card-footer bg-white border-0 text-center pb-4">
+    <a href="{% url 'product' product.id %}" class="btn btn-dark rounded-pill px-4">
+        View Product
+    </a>
+</div>
 
                 </div>
             </div>
@@ -64,6 +65,4 @@
         </div>
     </div>
 </section>
-
-    
-    {% endblock %}
+{% endblock %}
