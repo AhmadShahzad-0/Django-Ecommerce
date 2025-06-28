@@ -1,16 +1,32 @@
 from django.shortcuts import render, redirect
 # store/views.py
 from django.http import HttpResponse
-from .models import Product, Category
+from .models import Product, Category, Profile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm, UpdateUserForm, PasswordChangeForm
+from .forms import SignUpForm, UpdateUserForm, PasswordChangeForm, UserInfoForm
 from django import forms
 
 
 # Create your views here.
+def update_info(request):
+    if request.user.is_authenticated:
+        current_user = Profile.objects.get(user__id=request.user.id)  # Get the current user
+        form = UserInfoForm(request.POST or None, instance=current_user)  # Create a form instance with the current user data
+        if form.is_valid():
+            form.save()
+
+            # Display a success message
+            messages.success(request, "Your Information has been updated successfully.")
+            return redirect('home')
+        return render(request, 'store/update_info.html', {'form': form})
+    else:
+        messages.error(request, "You need to be logged in to update your Information.")
+        return redirect('login')
+        # return render(request, 'store/update_user.html', {'form': form})
+
 
 def update_password(request):
     if request.user.is_authenticated:
@@ -118,8 +134,8 @@ def register_user(request):
             #Login User
             user = authenticate(username=username, password=password)
             login(request, user)
-            messages.success(request, "You have been registered successfully.")
-            return redirect('home')
+            messages.success(request, "Registered Successfully - Please Fill out Your Billing Information.")
+            return redirect('update_info')
         
         else:
             messages.error(request, "Passwords do not match.")
