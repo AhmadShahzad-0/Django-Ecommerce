@@ -1,0 +1,67 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<!-- Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bolder text-decoration-underline">Search Results for "<span class="text-primary">{{ query }}</span>"</h2>
+            <p class="lead text-muted">Products related to your search</p>
+        </div>
+    </div>
+
+    <div class="container px-4 px-lg-5 mt-5">
+        {% if products %}
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {% for product in products %}
+                <div class="col mb-5">
+                    <div class="card h-100 border-0 shadow-sm"
+                        style="transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 1rem; overflow: hidden;"
+                        onmouseover="this.style.transform='scale(1.03)'; this.classList.add('shadow-lg')"
+                        onmouseout="this.style.transform='scale(1)'; this.classList.remove('shadow-lg')">
+
+                        {% if product.is_on_sale %}
+                        <div class="badge bg-danger text-white position-absolute"
+                            style="top: 0.75rem; right: 0.75rem; font-size: 0.8rem; padding: 0.5em 0.75em; border-radius: 0.5rem;">
+                            Sale
+                        </div>
+                        {% endif %}
+
+                        <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}"
+                            style="height: 250px; object-fit: cover;" />
+
+                        <div class="card-body px-4 pt-3 pb-2 text-center">
+                            <h5 class="fw-bold mb-2" style="font-size: 1.1rem;">{{ product.name }}</h5>
+
+                            {% if product.is_on_sale %}
+                            <div>
+                                <span class="text-muted text-decoration-line-through" style="font-size: 0.95rem;">
+                                    ${{ product.price }}
+                                </span>
+                                <span class="text-danger fw-semibold ms-2" style="font-size: 1rem;">
+                                    ${{ product.sale_price }}
+                                </span>
+                            </div>
+                            {% else %}
+                            <div class="fw-semibold" style="font-size: 1rem;">${{ product.price }}</div>
+                            {% endif %}
+
+                            <small class="text-muted d-block mt-1" style="font-size: 0.85rem;">{{ product.category }}</small>
+                        </div>
+
+                        <div class="card-footer bg-white border-0 text-center pb-4 pt-0">
+                            <a class="btn btn-dark px-4 py-2 rounded-pill" href="{% url 'product' product.id %}"
+                                style="font-size: 0.9rem;">
+                                View Product
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-muted">No products found for your search.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

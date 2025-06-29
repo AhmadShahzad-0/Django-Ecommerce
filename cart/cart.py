@@ -1,8 +1,11 @@
-from store.models import Product
+from store.models import Product, Profile
 
 class Cart():
     def __init__(self, request):
         self.session = request.session
+
+        # Get Request
+        self.request = request
 
         #Get the current session key if it exists
         cart = self.session.get('session_key')
@@ -13,6 +16,28 @@ class Cart():
 
         #Make sure cart is available on all pages of the site
         self.cart = cart
+    
+    def db_add(self, product, quantity):
+        product_id = str(product)
+        product_qty = str(quantity)
+
+        #Logic
+        if product_id in self.cart:
+            pass
+        else:
+            # self.cart[product_id] = {'price': str(product.price)}
+            self.cart[product_id] = int(product_qty)
+        self.session.modified = True
+
+        # Deal with the Lofin User
+        if self.request.user.is_authenticated:
+            # Get the Profile of the User
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            # replace it '' with ""
+            carty = str(self.cart)
+            carty = carty.replace("\'", "\"")
+            # Update the Profile with the new Cart
+            current_user.update(old_cart=carty)
 
     def add(self, product, quantity):
         product_id = str(product.id)
@@ -25,6 +50,16 @@ class Cart():
             # self.cart[product_id] = {'price': str(product.price)}
             self.cart[product_id] = int(product_qty)
         self.session.modified = True
+
+        # Deal with the Lofin User
+        if self.request.user.is_authenticated:
+            # Get the Profile of the User
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            # replace it '' with ""
+            carty = str(self.cart)
+            carty = carty.replace("\'", "\"")
+            # Update the Profile with the new Cart
+            current_user.update(old_cart=carty)
 
     def __len__(self):
         return len(self.cart)
@@ -77,6 +112,16 @@ class Cart():
         # Save the session
         self.session.modified = True
 
+        # Deal with the Lofin User
+        if self.request.user.is_authenticated:
+            # Get the Profile of the User
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            # replace it '' with ""
+            carty = str(self.cart)
+            carty = carty.replace("\'", "\"")
+            # Update the Profile with the new Cart
+            current_user.update(old_cart=carty)
+
         thing = self.cart
         return thing
     
@@ -88,3 +133,13 @@ class Cart():
 
         # Save the session
         self.session.modified = True
+
+        # Deal with the Lofin User
+        if self.request.user.is_authenticated:
+            # Get the Profile of the User
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            # replace it '' with ""
+            carty = str(self.cart)
+            carty = carty.replace("\'", "\"")
+            # Update the Profile with the new Cart
+            current_user.update(old_cart=carty)

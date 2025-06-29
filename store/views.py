@@ -8,9 +8,25 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, UpdateUserForm, PasswordChangeForm, UserInfoForm
 from django import forms
+from django.db.models import Q  # For complex queries
+import json
+from cart.cart import Cart  # Import the Cart class to handle cart operations
 
 
 # Create your views here.
+def search_products(request):
+    query = request.GET.get('q').strip()
+    products = []
+
+    if query:
+        products = Product.objects.filter(Q(name__icontains=query) | Q(description__icontains=query))
+        return render(request, 'store/search_results.html', {'products': products, 'query': query})
+    
+    else:
+        messages.error(request, "Please enter a search term.")
+        return redirect('home')
+
+
 def update_info(request):
     if request.user.is_authenticated:
         current_user = Profile.objects.get(user__id=request.user.id)  # Get the current user
@@ -109,6 +125,20 @@ def login_user(request):
         
         if user is not None:
             login(request, user)
+
+            # do some shopping cart logic here
+            current_user = Profile.objects.get(user__id=request.user.id)  # Get the current user
+            # Check if the user has an old cart
+            saved_cart = current_user.old_cart
+            # If the user has an old cart, load it into the session
+            if saved_cart:
+                # Convert the saved cart string back to a dictionary
+                converted_cart = json.loads(saved_cart)
+                # Initialize the cart with the saved items
+                cart = Cart(request)
+                for key, value in converted_cart.items():
+                    cart.db_add(product=key, quantity=value)
+                    
             messages.success(request, "You have been logged in successfully.")
             return redirect('home')
         else:
