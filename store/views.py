@@ -1,12 +1,15 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 # store/views.py
 from django.http import HttpResponse
 from .models import Product, Category, Profile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.messages import get_messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, UpdateUserForm, PasswordChangeForm, UserInfoForm
+from payment.forms import ShippingForm
+from payment.models import ShippingAddress
 from django import forms
 from django.db.models import Q  # For complex queries
 import json
@@ -29,19 +32,31 @@ def search_products(request):
 
 def update_info(request):
     if request.user.is_authenticated:
-        current_user = Profile.objects.get(user__id=request.user.id)  # Get the current user
-        form = UserInfoForm(request.POST or None, instance=current_user)  # Create a form instance with the current user data
-        if form.is_valid():
-            form.save()
+        current_user = get_object_or_404(Profile, user=request.user)
+        shipping_user = ShippingAddress.objects.filter(user=request.user).first()
 
-            # Display a success message
-            messages.success(request, "Your Information has been updated successfully.")
-            return redirect('home')
-        return render(request, 'store/update_info.html', {'form': form})
+        form = UserInfoForm(request.POST or None, instance=current_user)
+        shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
+
+        if request.method == 'POST':
+            if form.is_valid() and shipping_form.is_valid():
+                form.save()
+                shipping_form.save()
+                messages.success(request, "Your information has been updated successfully.")
+                return redirect('home')
+            else:
+                messages.error(request, "Please fill out the required fields.")
+        else:
+            # 👇 Clear any leftover messages on GET
+            list(get_messages(request))
+
+        return render(request, 'store/update_info.html', {
+            'form': form,
+            'shipping_form': shipping_form
+        })
     else:
-        messages.error(request, "You need to be logged in to update your Information.")
+        messages.error(request, "You need to be logged in to update your information.")
         return redirect('login')
-        # return render(request, 'store/update_user.html', {'form': form})
 
 
 def update_password(request):

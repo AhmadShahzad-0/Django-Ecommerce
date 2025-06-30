@@ -1,131 +1,189 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Django Ecommerce</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
-    <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <style>
-@keyframes bounce {
-  0%   { transform: scale(1); }
-  30%  { transform: scale(1.3); }
-  50%  { transform: scale(0.9); }
-  70%  { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
 
-.bounce {
-  animation: bounce 0.6s ease;
-}
-</style>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+
+  <style>
+    @keyframes bounce {
+        0% { transform: scale(1); }
+        30% { transform: scale(1.1); }
+        50% { transform: scale(0.95); }
+        70% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    .bounce {
+        animation: bounce 0.4s ease;
+    }
+
+    .alert {
+        animation: fadeIn 0.5s ease;
+        margin-top: 1rem;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer a {
+        position: relative;
+        transition: color 0.2s ease;
+    }
+
+    footer a::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #f8f9fa;
+        transition: width 0.3s ease;
+    }
+
+    footer a:hover::after {
+        width: 100%;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 0.2rem rgba(255,255,255,0.2);
+    }
+
+    .btn-outline-light:hover {
+        background-color: white;
+        color: #000;
+    }
+  </style>
 
 </head>
-
 <body>
+
     {% include 'store/navbar.html' %}
-    {% if messages %}
-  {% for message in messages %}
-    <div class="alert alert-{{ message.tags }} d-flex align-items-center justify-content-between shadow-sm border-0 rounded-3 fade show"
-         role="alert">
-      <div class="d-flex align-items-center gap-2">
-        {% if "success" in message.tags %}
-          <i class="bi bi-check-circle-fill text-success fs-5"></i>
-        {% elif "warning" in message.tags %}
-          <i class="bi bi-exclamation-triangle-fill text-warning fs-5"></i>
-        {% elif "error" in message.tags %}
-          <i class="bi bi-x-circle-fill text-danger fs-5"></i>
-        {% else %}
-          <i class="bi bi-info-circle-fill text-primary fs-5"></i>
+
+    <!-- Toast/Alert Messages -->
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} d-flex align-items-center justify-content-between shadow-sm border-0 rounded-3 fade show"
+                     role="alert">
+                    <div class="d-flex align-items-center gap-2">
+                        {% if "success" in message.tags %}
+                            <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                        {% elif "warning" in message.tags %}
+                            <i class="bi bi-exclamation-triangle-fill text-warning fs-5"></i>
+                        {% elif "error" in message.tags %}
+                            <i class="bi bi-x-circle-fill text-danger fs-5"></i>
+                        {% else %}
+                            <i class="bi bi-info-circle-fill text-primary fs-5"></i>
+                        {% endif %}
+                        <span>{{ message }}</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
         {% endif %}
-        <span>{{ message }}</span>
-      </div>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    {% endfor %}
-    {% endif %}
-
+    <!-- Main Content Block -->
     {% block content %}
     {% endblock %}
 
-    <!-- Footer-->
-    <footer class="bg-dark text-white pt-5 pb-4">
-  <div class="container text-md-left">
-    <div class="row">
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-4 mt-5">
+        <div class="container text-md-left">
+            <div class="row">
 
-      <!-- Company Info -->
-      <div class="col-md-3 mb-4">
-        <h5 class="text-uppercase fw-bold mb-3">About Us</h5>
-        <p>
-          We offer the best quality perfumes at unbeatable prices. Trusted by thousands of happy customers.
-        </p>
-        <p><i class="bi bi-geo-alt-fill me-2"></i>123 Fragrance Ave, City, Country</p>
-        <p><i class="bi bi-envelope-fill me-2"></i>support@example.com</p>
-        <p><i class="bi bi-telephone-fill me-2"></i>+1 (123) 456-7890</p>
-      </div>
+                <!-- About -->
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-uppercase fw-bold mb-3">About Us</h5>
+                    <p>We offer the best quality perfumes at unbeatable prices. Trusted by thousands of happy customers.</p>
+                    <p><i class="bi bi-geo-alt-fill me-2"></i>123 Fragrance Ave, City, Country</p>
+                    <p><i class="bi bi-envelope-fill me-2"></i>support@example.com</p>
+                    <p><i class="bi bi-telephone-fill me-2"></i>+1 (123) 456-7890</p>
+                </div>
 
-      <!-- Quick Links -->
-      <div class="col-md-2 mb-4">
-        <h5 class="text-uppercase fw-bold mb-3">Shop</h5>
-        <ul class="list-unstyled">
-          <li><a href="{% url 'category_summary' %}" class="text-white text-decoration-none">All Products</a></li>
-          <li><a href="{% url 'category' "Men's-Perfume" %}" class="text-white text-decoration-none">Men's Perfume</a></li>
-          <li><a href="{% url 'category' "Women's-Perfume" %}" class="text-white text-decoration-none">Women's Perfume</a></li>
-          <li><a href="{% url 'home' %}" class="text-white text-decoration-none">Home</a></li>
-        </ul>
-      </div>
+                <!-- Shop -->
+                <div class="col-md-2 mb-4">
+                    <h5 class="text-uppercase fw-bold mb-3">Shop</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'category_summary' %}" class="text-white text-decoration-none">All Products</a></li>
+                        <li><a href="{% url 'category' "Men's-Perfume" %}" class="text-white text-decoration-none">Men's Perfume</a></li>
+                        <li><a href="{% url 'category' "Women's-Perfume" %}" class="text-white text-decoration-none">Women's Perfume</a></li>
+                        <li><a href="{% url 'home' %}" class="text-white text-decoration-none">Home</a></li>
+                    </ul>
+                </div>
 
-      <!-- Support Links -->
-      <div class="col-md-2 mb-4">
-        <h5 class="text-uppercase fw-bold mb-3">Support</h5>
-        <ul class="list-unstyled">
-          <li><a href="#" class="text-white text-decoration-none">FAQs</a></li>
-          <li><a href="#" class="text-white text-decoration-none">Shipping & Returns</a></li>
-          <li><a href="#" class="text-white text-decoration-none">Order Tracking</a></li>
-          <li><a href="#" class="text-white text-decoration-none">Contact Us</a></li>
-        </ul>
-      </div>
+                <!-- Support -->
+                <div class="col-md-2 mb-4">
+                    <h5 class="text-uppercase fw-bold mb-3">Support</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none">FAQs</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Shipping & Returns</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Order Tracking</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Contact Us</a></li>
+                    </ul>
+                </div>
 
-      <!-- Newsletter -->
-      <div class="col-md-5 mb-4">
-        <h5 class="text-uppercase fw-bold mb-3">Subscribe to Our Newsletter</h5>
-        <form class="d-flex">
-          <input type="email" class="form-control me-2" placeholder="Enter your email">
-          <button class="btn btn-outline-light" type="submit">Subscribe</button>
-        </form>
-        <div class="mt-4">
-          <h6 class="fw-semibold mb-2">Follow us</h6>
-          <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-5"></i></a>
-          <a href="#" class="text-white me-3"><i class="bi bi-instagram fs-5"></i></a>
-          <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-5"></i></a>
-          <a href="#" class="text-white"><i class="bi bi-youtube fs-5"></i></a>
+                <!-- Newsletter -->
+                <div class="col-md-5 mb-4">
+                    <h5 class="text-uppercase fw-bold mb-3">Subscribe to Our Newsletter</h5>
+                    <form class="d-flex">
+                        <input type="email" class="form-control me-2" placeholder="Enter your email">
+                        <button class="btn btn-outline-light" type="submit">Subscribe</button>
+                    </form>
+                    <div class="mt-4">
+                        <h6 class="fw-semibold mb-2">Follow us</h6>
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-instagram fs-5"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-5"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-youtube fs-5"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            <hr class="border-light" />
+            <div class="text-center">
+                <p class="mb-0">&copy; Developed by Ahmad 2025. All Rights Reserved.</p>
+            </div>
         </div>
-      </div>
-
-    </div>
-    <hr class="border-light" />
-    <div class="text-center">
-      <p class="mb-0">&copy; Developed by Ahmad 2025. All Rights Reserved.</p>
-    </div>
-  </div>
-</footer>
-
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
+    </footer>
+    <!-- jQuery (load cleanly without integrity check) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+    console.log("✅ jQuery version:", typeof $ === 'function' ? $.fn.jquery : 'jQuery NOT loaded');
+    </script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'js/scripts.js' %}"></script>
-</body>
+    <!-- Extra JS block for per-page scripts -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.addEventListener('closed.bs.alert', function () {
+                    console.log('Alert closed.');
+                });
 
+                // Auto-dismiss after 5s
+                setTimeout(() => {
+                    const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                    bsAlert.close();
+                }, 5000);
+            });
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
 </html>

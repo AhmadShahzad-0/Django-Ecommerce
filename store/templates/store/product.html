@@ -110,37 +110,50 @@
 </div>
 
 
-
+{% block extra_js %}
 <script>
-    // Check if Button Pressed
-    $(document).on('click', '#add-cart', function(e){
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: '{% url "cart_add" %}',
-            data: {
-                'product_id': $('#add-cart').val(),
-                'product_qty': $('#qty-cart option:selected').text(),
-                'csrfmiddlewaretoken': '{{ csrf_token }}',
-                'action': 'post'
-            },
-            success: function(json){
-                // Update cart badge
-                const badge = document.getElementById("cart_quantity");
-                badge.textContent = json.qty;
+    $(document).ready(function() {
+        console.log("DOM ready, jQuery working");
 
-                // Bounce effect
-                badge.classList.remove("bounce");
-                void badge.offsetWidth;
-                badge.classList.add("bounce");
-            },
-            error: function(xhr, errmsg, err){
-                console.error("AJAX error:", errmsg);
-            }
+        $('#add-cart').on('click', function(e) {
+            e.preventDefault();
+
+            const productId = $(this).val();
+            const productQty = $('#qty-cart option:selected').val();
+            const csrfToken = '{{ csrf_token }}';
+
+            console.log("Clicked Add to Cart");
+            console.log("Product ID:", productId);
+            console.log("Qty:", productQty);
+
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'cart_add' %}",
+                data: {
+                    product_id: productId,
+                    product_qty: productQty,
+                    csrfmiddlewaretoken: csrfToken,
+                    action: 'post'
+                },
+                success: function(json) {
+                    const badge = document.getElementById("cart_quantity");
+                    if (badge) {
+                        badge.textContent = json.qty;
+                        badge.classList.remove("bounce");
+                        void badge.offsetWidth;
+                        badge.classList.add("bounce");
+                    }
+                    console.log("Cart updated successfully.");
+                },
+                error: function(xhr, errmsg, err) {
+                    console.error("AJAX Error:", errmsg);
+                    console.log(xhr.responseText);
+                }
+            });
         });
     });
 </script>
 
 
-
+{% endblock %}
 {% endblock %}

@@ -2,37 +2,49 @@
 
 {% block content %}
 
-<!-- Header-->
+<!-- Header -->
 <header class="bg-dark py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Update Info</h1>
-            <p class="lead fw-normal text-white-50 mb-0">Update your account information</p>
-        </div>
+    <div class="container px-4 px-lg-5 text-center text-white">
+        <h1 class="display-5 fw-bold">Update Info</h1>
+        <p class="lead text-white-50 mb-0">Manage your billing and shipping details</p>
     </div>
 </header>
 
-<div class="container">
-    <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <br><br>
-                <form method="POST" action="{% url 'update_info' %}">
-                    {% csrf_token %}
+<!-- Form Content -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4 p-lg-5">
 
-                    {{ form.as_p }}
-                    <br>
-                    <button type="submit" class="btn btn-secondary">
-                        Update
-                    </button>
-                    
+                    <h3 class="fw-bold mb-4 text-center text-dark">Account Details</h3>
 
-                </form>
-                <br><br>
-                <br><br>
-                <br><br>
-                <br><br>
+                    <form method="POST" action="{% url 'update_info' %}" class="needs-validation" novalidate>
+                        {% csrf_token %}
 
+                        <!-- Billing Info -->
+                        <h5 class="mb-3 text-secondary">Billing Information</h5>
+                        <div class="mb-4">
+                            {{ form.as_p }}
+                        </div>
+
+                        <!-- Shipping Info -->
+                        <h5 class="mt-4 mb-3 text-secondary">Shipping Information</h5>
+                        <div class="mb-4">
+                            {{ shipping_form.as_p }}
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-dark px-4 py-2 rounded-pill">
+                                <i class="bi bi-arrow-repeat me-2"></i>Update Info
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
             </div>
+        </div>
     </div>
 </div>
 

@@ -98,7 +98,8 @@
     {% endif %}
 </div>
 
-<!-- JS -->
+{% block extra_js %}
+    <!-- Your custom script -->
 <script>
     $(document).on('click', '.update-cart', function (e) {
         e.preventDefault();
@@ -141,4 +142,6 @@
         });
     });
 </script>
+
+{% endblock %}
 {% endblock %}
