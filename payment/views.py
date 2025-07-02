@@ -52,6 +52,12 @@ def process_order(request):
                         create_order_item = OrderItem(order_id=order_id, product_id=product_id, user=user, price=price, quantity=value)
                         create_order_item.save()
 
+            # Delete Ourt Cart After Purchase
+            for key in list(request.session.keys()):
+                if key == "session_key":
+                    # Delete the key
+                    del request.session[key]
+
         else:
             create_order = Order(full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
             create_order.save()
@@ -76,6 +82,12 @@ def process_order(request):
                         # Create Order Item
                         create_order_item = OrderItem(order_id=order_id, product_id=product_id, price=price, quantity=value)
                         create_order_item.save()
+
+            # Delete Ourt Cart After Purchase
+            for key in list(request.session.keys()):
+                if key == "session_key":
+                    # Delete the key
+                    del request.session[key]
 
         messages.success(request, "Your order has been placed.")
         return redirect('home')
