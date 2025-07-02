@@ -60,14 +60,14 @@
                     <h5 class="mb-0">Shipping Information</h5>
                 </div>
                 <div class="card-body">
-                    <form method="post" class="needs-validation" novalidate>
+                    <form method="POST" action="{% url 'billing_info' %}">
                         {% csrf_token %}
                         <div class="form-group">
                             {{ shipping_form.as_p }}
                         </div>
                         <div class="d-grid mt-4">
                             <button type="submit" class="btn btn-dark btn-lg">
-                                <i class="bi bi-credit-card-2-front me-2"></i>Place Order
+                                <i class="bi bi-credit-card-2-front me-2"></i>Continue to Billing
                             </button>
                         </div>
                     </form>
