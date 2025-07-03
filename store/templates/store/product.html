@@ -43,14 +43,17 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="text-center">
-                    <a href="{% url 'home' %}" class="btn btn-outline-secondary me-2 px-4 py-2 rounded-pill">
-                        <i class="bi bi-house-door me-1"></i> Home
-                    </a>
-                    <button type="button" value="{{ product.id }}" class="btn btn-dark px-4 py-2 rounded-pill" id="add-cart">
-                        <i class="bi bi-cart-plus me-1"></i> Add To Cart
-                    </button>
-                </div>
+<div class="text-center">
+  <a href="{% url 'home' %}" class="btn btn-outline-secondary me-2 px-4 py-2 rounded-pill">
+    <i class="bi bi-house-door me-1"></i> Home
+  </a>
+  <button type="button" class="btn btn-dark px-4 py-2 rounded-pill add-to-cart-btn" 
+          data-product-id="{{ product.id }}">
+    <i class="bi bi-cart-plus me-1"></i> Add To Cart
+  </button>
+</div>
+
+
             </div>
         </div>
     </div>
@@ -112,48 +115,44 @@
 
 {% block extra_js %}
 <script>
-    $(document).ready(function() {
-        console.log("DOM ready, jQuery working");
+  $(document).ready(function () {
+    $('.add-to-cart-btn').on('click', function (e) {
+      e.preventDefault();
 
-        $('#add-cart').on('click', function(e) {
-            e.preventDefault();
+      const productId = $(this).data('product-id');
+      const productQty = $('#qty-cart option:selected').val() || 1;  // Default to 1
+      const csrfToken = '{{ csrf_token }}';
 
-            const productId = $(this).val();
-            const productQty = $('#qty-cart option:selected').val();
-            const csrfToken = '{{ csrf_token }}';
-
-            console.log("Clicked Add to Cart");
-            console.log("Product ID:", productId);
-            console.log("Qty:", productQty);
-
-            $.ajax({
-                type: 'POST',
-                url: "{% url 'cart_add' %}",
-                data: {
-                    product_id: productId,
-                    product_qty: productQty,
-                    csrfmiddlewaretoken: csrfToken,
-                    action: 'post'
-                },
-                success: function(json) {
-                    const badge = document.getElementById("cart_quantity");
-                    if (badge) {
-                        badge.textContent = json.qty;
-                        badge.classList.remove("bounce");
-                        void badge.offsetWidth;
-                        badge.classList.add("bounce");
-                    }
-                    console.log("Cart updated successfully.");
-                },
-                error: function(xhr, errmsg, err) {
-                    console.error("AJAX Error:", errmsg);
-                    console.log(xhr.responseText);
-                }
-            });
-        });
+      $.ajax({
+        type: 'POST',
+        url: "{% url 'cart_add' %}",
+        data: {
+          product_id: productId,
+          product_qty: productQty,
+          csrfmiddlewaretoken: csrfToken,
+          action: 'post'
+        },
+        success: function (response) {
+          if (response.qty !== undefined) {
+            const badge = document.getElementById("cart_quantity");
+            if (badge) {
+              badge.textContent = response.qty;
+              badge.classList.remove("bounce");
+              void badge.offsetWidth;
+              badge.classList.add("bounce");
+            }
+          } else {
+            console.error("Unexpected response:", response);
+          }
+        },
+        error: function (xhr, errmsg, err) {
+          console.error("AJAX Error:", errmsg);
+          alert("Error adding product to cart.");
+        }
+      });
     });
+  });
 </script>
-
-
 {% endblock %}
+
 {% endblock %}

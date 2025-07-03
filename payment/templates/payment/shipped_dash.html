@@ -1,0 +1,64 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <h2 class="text-center text-primary fw-bold mb-4">
+                        📦 Shipped Orders
+                    </h2>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover table-borderless align-middle shadow-sm rounded">
+                            <thead class="table-primary text-dark border-bottom">
+                                <tr class="text-uppercase small fw-semibold">
+                                    <th>Order #</th>
+                                    <th>Customer</th>
+                                    <th>Email</th>
+                                    <th>Amount</th>
+                                    <th>Shipped Date</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for items in orders %}
+                                <tr class="border-bottom">
+                                    <td>
+                                        <a href="{% url 'orders' items.id %}" class="text-decoration-none fw-semibold text-dark">
+                                            #{{ items.id }}
+                                        </a>
+                                    </td>
+                                    <td>{{ items.full_name }}</td>
+                                    <td>{{ items.email }}</td>
+                                    <td class="text-success fw-medium">${{ items.amount_paid }}</td>
+                                    <td>{{ items.date_shipped|date:"M d, Y" }}</td>
+                                    <td class="text-center">
+                                        <form method="POST" class="d-inline-block">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="shipping_status" value="false">
+                                            <input type="hidden" name="num" value="{{ items.id }}">
+                                            <button type="submit" class="btn btn-outline-danger btn-sm px-3">
+                                                Un-Ship
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted fs-6">
+                                        🚫 No shipped orders found.
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

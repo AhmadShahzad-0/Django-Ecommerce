@@ -11,12 +11,13 @@ import datetime
 class ShippingAddress(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     shipping_full_name = models.CharField(max_length=255)
+    shipping_phone = models.CharField(max_length=15)
     shipping_email = models.CharField(max_length=255)
     shipping_address1 = models.CharField(max_length=255)
     shipping_address2 = models.CharField(max_length=255, blank=True, null=True)
     shipping_city = models.CharField(max_length=255)
-    shipping_state = models.CharField(max_length=255, blank=True, null=True)
-    shipping_zipcode = models.CharField(max_length=255, blank=True, null=True)
+    shipping_state = models.CharField(max_length=255)
+    shipping_zipcode = models.CharField(max_length=255)
     shipping_country = models.CharField(max_length=255)
 
     # Don't Pluralize the address
@@ -41,6 +42,7 @@ class Order(models.Model):
     #  Foreign Key
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     full_name = models.CharField(max_length=255)
+    phone = models.CharField(max_length=15)
     email = models.EmailField(max_length=255)
     shipping_address = models.TextField(max_length=15000)
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2)

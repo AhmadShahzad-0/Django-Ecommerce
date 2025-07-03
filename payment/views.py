@@ -1,12 +1,90 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from cart.cart import Cart
 from .models import ShippingAddress, Order, OrderItem
 from django.contrib.auth.models import User
 from .forms import ShippingForm, PaymentForm
 from django.contrib import messages
 from store.models import Product
+import datetime
 
 # Create your views here.
+def orders(request, pk):
+    if request.user.is_authenticated and request.user.is_superuser:
+        # Get the Order
+        order = Order.objects.get(id=pk)
+        # Get the Order items
+        items = OrderItem.objects.filter(order=pk)
+
+        if request.POST:
+            status = request.POST.get('shipping_status')
+            # Check status if true or not
+            if status == "true":
+                # get the Order
+                order = Order.objects.filter(id=pk)
+                # Grab the Date and Time
+                now = datetime.datetime.now()
+                # Update Order
+                order.update(shipped=True, date_shipped=now)
+            else:
+                # get the Order
+                order = Order.objects.filter(id=pk)
+                # Update the status
+                order.update(shipped=False)
+
+            # Redirect
+            messages.success(request, "Shipping Status Updated")
+            return redirect('home')
+
+        return render(request, 'payment/orders.html', {'order': order, 'items': items})
+    
+    else:
+        messages.error(request,"Access Denied")
+        return redirect('home')
+
+def shipped_dash(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        orders = Order.objects.filter(shipped=True)
+        if request.POST:
+            status = request.POST.get('shipping_status')
+            num = request.POST.get('num')
+            # get the Order
+            order = Order.objects.filter(id=num)
+            # Grab the Date and Time
+            now = datetime.datetime.now()
+            # Update Order
+            order.update(shipped=False)
+            # Redirect
+            messages.success(request, "Shipping Status Updated")
+            return redirect('home')
+        
+        return render(request, 'payment/shipped_dash.html', {'orders': orders})
+    
+    else:
+        messages.error(request, "Access Denied")
+        return redirect('home')
+
+def not_shipped_dash(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        orders = Order.objects.filter(shipped=False)
+        if request.POST:
+            status = request.POST.get('shipping_status')
+            num = request.POST.get('num')
+            # get the Order
+            order = Order.objects.filter(id=num)
+            # Grab the Date and Time
+            now = datetime.datetime.now()
+            # Update Order
+            order.update(shipped=True, date_shipped=now)
+            # Redirect
+            messages.success(request, "Shipping Status Updated")
+            return redirect('home')
+
+        return render(request, 'payment/not_shipped_dash.html', {'orders': orders})
+    
+    else:
+        messages.error(request, "Access Denied")
+        return redirect('home')
+
 def process_order(request):
     if request.method == "POST":
         cart = Cart(request)
@@ -23,12 +101,13 @@ def process_order(request):
 
         full_name = my_shipping['shipping_full_name']
         email = my_shipping['shipping_email']
+        phone = my_shipping['shipping_phone']
         shipping_address = f"{my_shipping['shipping_address1']}\n{my_shipping['shipping_address2']}\n{my_shipping['shipping_city']}\n{my_shipping['shipping_state']}\n{my_shipping['shipping_zipcode']}\n{my_shipping['shipping_country']}"
         amount_paid = totals
 
         if request.user.is_authenticated:
             user = request.user
-            create_order = Order(user=user, full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
+            create_order = Order(user=user, full_name=full_name, phone=phone, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
             create_order.save()
 
             # Add Order items
@@ -59,7 +138,7 @@ def process_order(request):
                     del request.session[key]
 
         else:
-            create_order = Order(full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
+            create_order = Order(full_name=full_name, phone=phone, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
             create_order.save()
 
             # Add Order items
@@ -105,6 +184,7 @@ def billing_info(request):
         # Store shipping data in session
         my_shipping = {
             'shipping_full_name': request.POST.get('shipping_full_name', ''),
+            'shipping_phone': request.POST.get('shipping_phone', ''),
             'shipping_email': request.POST.get('shipping_email', ''),
             'shipping_address1': request.POST.get('shipping_address1', ''),
             'shipping_address2': request.POST.get('shipping_address2', ''),

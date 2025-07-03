@@ -3,6 +3,7 @@ from .cart import Cart
 from store.models import Product
 from django.http import JsonResponse
 from django.contrib import messages
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 
@@ -14,28 +15,36 @@ def cart_summary(request):
     totals = cart.cart_totals()
     return render(request, 'cart/cart_summary.html', {'cart_products': cart_products, 'quantities': quantities, 'totals': totals})
 
-# Add to Cart
 def cart_add(request):
-    #Get the cart
+    # Get the cart
     cart = Cart(request)
-    #test for Post
+
+    # Test for POST
     if request.POST.get('action') == 'post':
-        #Get the product id
-        product_id = int(request.POST.get('product_id'))
-        product_qty = int(request.POST.get('product_qty'))
-        #Get the product
-        product = get_object_or_404(Product, id=product_id)
-        #Add the product to the cart
-        cart.add(product=product, quantity=product_qty)
+        try:
+            # Get the product id and quantity
+            product_id = int(request.POST.get('product_id'))
+            product_qty = int(request.POST.get('product_qty'))
 
-        #Get the total number of items in the cart
-        cart_quantity = cart.__len__()
+            # Get the product
+            product = get_object_or_404(Product, id=product_id)
 
-        #Return a JsonResponse
-        #response = JsonResponse({'Product Name':product.name})
-        response = JsonResponse({'qty': cart_quantity})
-        messages.success(request, "Product added to cart successfully...")
-        return response
+            # Add the product to the cart
+            cart.add(product=product, quantity=product_qty)
+
+            # Get the total number of items in the cart
+            cart_quantity = cart.__len__()
+
+            # Success message
+            messages.success(request, "Product added to cart successfully.")
+
+            # Return a JsonResponse
+            return JsonResponse({'qty': cart_quantity})
+
+        except Exception as e:
+            # Error message
+            messages.error(request, "Failed to add product to cart.")
+            return JsonResponse({'error': 'An error occurred.'}, status=500)
 
 def cart_delete(request):
     cart = Cart(request)

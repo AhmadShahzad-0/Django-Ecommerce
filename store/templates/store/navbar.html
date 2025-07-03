@@ -1,119 +1,105 @@
-<!-- Sleek Bootstrap 5 Navbar -->
-<nav class="navbar navbar-expand-lg navbar-white bg-white border-bottom shadow-sm sticky-top py-3">
-  <div class="container-fluid px-4 px-lg-5">
-    
-    <!-- Brand Logo / Name -->
-    <a class="navbar-brand fw-bold fs-3 text-dark" href="{% url 'home' %}">Artwork</a>
+<!-- Top Info Bar -->
+<div class="bg-black text-white text-center py-1 small fw-semibold">
+  Enjoy Free Shipping on Orders Above 3,000
+</div>
 
-    <!-- Toggle for mobile -->
-    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
-      aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<!-- Main Navbar Section -->
+<nav class="bg-white border-bottom shadow-sm sticky-top">
 
-    <!-- Navbar Content -->
-    <div class="collapse navbar-collapse" id="mainNavbar">
-      
-      <!-- Left Side Links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 gap-lg-3">
-        <li class="nav-item">
-          <a class="nav-link fw-semibold text-dark" href="{% url 'home' %}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-semibold text-dark" href="{% url 'about' %}">About</a>
-        </li>
+  <!-- First Row -->
+  <div class="container-fluid py-3 px-3 px-md-4 position-relative d-flex flex-wrap justify-content-between align-items-center">
 
-        {% if user.is_authenticated %}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle fw-semibold text-dark" href="#" id="profileDropdown" role="button"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            Profile
-          </a>
-          <ul class="dropdown-menu shadow-sm border-0 rounded-3 animate__animated animate__fadeIn"
-            aria-labelledby="profileDropdown">
-            <li>
-              <a class="dropdown-item px-3 py-2" href="{% url 'update_user' %}">Update Profile</a>
-            </li>
-            <li><hr class="dropdown-divider"></li>
-            <li>
-              <a class="dropdown-item px-3 py-2" href="{% url 'update_info' %}">Update Info</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark fw-semibold" href="{% url 'logout' %}">Logout</a>
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a class="nav-link text-dark fw-semibold" href="{% url 'login' %}">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark fw-semibold" href="{% url 'register' %}">Register</a>
-        </li>
-        {% endif %}
-
-        <!-- Dropdown for Categories -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle fw-semibold text-dark" href="#" id="categoriesDropdown" role="button"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            Categories
-          </a>
-          <ul class="dropdown-menu shadow-sm border-0 rounded-3 animate__animated animate__fadeIn"
-            aria-labelledby="categoriesDropdown">
-            <li>
-              <a class="dropdown-item px-3 py-2" href="{% url 'category_summary' %}">🛍️ All Products</a>
-            </li>
-            <li><hr class="dropdown-divider"></li>
-            <li>
-              <a class="dropdown-item px-3 py-2" href="{% url 'category' "Men's-Perfume" %}">👔 Men's Perfume</a>
-            </li>
-            <li>
-              <a class="dropdown-item px-3 py-2" href="{% url 'category' "Women's-Perfume" %}">💄 Women's Perfume</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-
-
-<!-- Right Section: Cart + Search -->
-  <div class="d-flex align-items-center ms-auto">
-    
-    <!-- Cart -->
-    <a href="{% url 'cart_summary' %}" class="btn btn-dark rounded-pill px-4 py-2 me-3">
-      <i class="bi bi-cart-fill me-2"></i>
-      Cart
-      <span id="cart_quantity" class="badge bg-light text-dark ms-2 rounded-pill">
-        {{ cart|length }}
-      </span>
-    </a>
-
-    <!-- Search Button + Form -->
-    <div class="position-relative d-flex align-items-center">
-      <button id="searchToggle"
-        class="btn btn-dark rounded-circle d-flex align-items-center justify-content-center"
-        style="width: 42px; height: 42px;" type="button">
-        <i class="bi bi-search fs-6"></i>
+    <!-- Left: Search -->
+    <form class="d-flex align-items-center mb-2 mb-md-0" action="{% url 'search_products' %}" method="GET">
+      <input class="form-control rounded-pill px-3 py-2 border" type="search" name="q" placeholder="Search" style="min-width: 180px;">
+      <button class="btn ms-2" type="submit">
+        <i class="bi bi-search fs-5"></i>
       </button>
+    </form>
 
-      <form id="searchForm"
-        class="position-absolute d-flex align-items-center bg-dark rounded-pill shadow-lg px-2"
-        style="right: 3.2rem; opacity: 0; pointer-events: none; transition: all 0.3s ease; width: 0; overflow: hidden; z-index: 1000;"
-        action="{% url 'search_products' %}" method="GET">
-        <div class="position-relative w-100">
-          <input class="form-control bg-dark text-white border-0 rounded-pill px-3 pe-5"
-            type="search" name="q" placeholder="Search..." aria-label="Search"
-            style="height: 42px; font-size: 0.95rem; min-width: 200px;">
-          <button
-            class="btn position-absolute top-50 end-0 translate-middle-y text-white p-0 me-2"
-            type="submit">
-            <i class="bi bi-search fs-6"></i>
-          </button>
-        </div>
-      </form>
+    <!-- Center: Logo (centered on large screens, stacked on small) -->
+    <div class="position-absolute top-50 start-50 translate-middle d-none d-md-block">
+      <a class="navbar-brand fw-bold fs-3 text-dark" href="{% url 'home' %}">Artwork</a>
+    </div>
+    <div class="w-100 d-flex justify-content-center d-md-none mb-2">
+      <a class="navbar-brand fw-bold fs-3 text-dark" href="{% url 'home' %}">Artwork</a>
     </div>
 
+    <!-- Right: Account Dropdown + Cart -->
+    <div class="d-flex align-items-center ms-auto">
+
+      {% if user.is_authenticated %}
+      <!-- Account Dropdown for Logged-in User -->
+      <div class="dropdown me-3">
+        <a class="text-dark d-flex align-items-center dropdown-toggle text-decoration-none" href="#" role="button" data-bs-toggle="dropdown">
+          <i class="bi bi-person fs-5 me-1"></i>
+          <span class="fw-semibold">Account</span>
+        </a>
+        <ul class="dropdown-menu shadow-sm border-0 rounded-3 animate__animated animate__fadeIn">
+          <li><a class="dropdown-item" href="{% url 'update_user' %}">Update Profile</a></li>
+          <li><a class="dropdown-item" href="{% url 'update_info' %}">Update Info</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li>
+            <form method="POST" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button class="dropdown-item text-danger" type="submit">Logout</button>
+            </form>
+          </li>
+        </ul>
+      </div>
+      {% else %}
+      <!-- Login for Guests -->
+      <a href="{% url 'login' %}" class="text-dark me-3 d-flex align-items-center">
+        <i class="bi bi-person fs-5 me-1"></i>
+        <span class="fw-semibold">Login</span>
+      </a>
+      {% endif %}
+
+      <!-- Cart -->
+      <a href="{% url 'cart_summary' %}" class="text-dark d-flex align-items-center position-relative">
+        <i class="bi bi-cart fs-5"></i>
+        <span id="cart_quantity" class="badge bg-dark text-white ms-2 rounded-pill">{{ cart|length }}</span>
+      </a>
+
+    </div>
   </div>
-</div>
+
+  <!-- Second Row: Nav Links -->
+  <div class="border-top">
+    <div class="container-fluid py-2 d-flex justify-content-center gap-4 flex-wrap">
+
+      <a class="nav-link text-dark fw-semibold" href="{% url 'home' %}">Home</a>
+      <a class="nav-link text-dark fw-semibold" href="{% url 'about' %}">About</a>
+
+      <!-- Categories Dropdown -->
+      <div class="dropdown">
+        <a class="nav-link dropdown-toggle text-dark fw-semibold" href="#" data-bs-toggle="dropdown">
+          Categories
+        </a>
+        <ul class="dropdown-menu shadow-sm border-0 rounded-3 animate__animated animate__fadeIn">
+          <li><a class="dropdown-item" href="{% url 'category_summary' %}">🛍️ All Products</a></li>
+          <li><a class="dropdown-item" href="{% url 'category' "Men's-Perfume" %}">👔 Men's Perfume</a></li>
+          <li><a class="dropdown-item" href="{% url 'category' "Women's-Perfume" %}">💄 Women's Perfume</a></li>
+        </ul>
+      </div>
+
+      {% if user.is_authenticated %}
+
+      {% if user.is_superuser %}
+      <!-- Orders Dropdown -->
+      <div class="dropdown">
+        <a class="nav-link dropdown-toggle text-dark fw-semibold" href="#" data-bs-toggle="dropdown">
+          Orders
+        </a>
+        <ul class="dropdown-menu shadow-sm border-0 rounded-3 animate__animated animate__fadeIn">
+          <li><a class="dropdown-item" href="{% url 'shipped_dash' %}">Shipped Orders</a></li>
+          <li><a class="dropdown-item" href="{% url 'not_shipped_dash' %}">Un-Shipped Orders</a></li>
+        </ul>
+      </div>
+      {% endif %}
+      {% endif %}
+
+    </div>
   </div>
 </nav>
 
@@ -121,13 +107,13 @@
   const searchToggle = document.getElementById('searchToggle');
   const searchForm = document.getElementById('searchForm');
 
-  searchToggle.addEventListener('click', () => {
+  searchToggle?.addEventListener('click', () => {
     const visible = searchForm.style.opacity === '1';
 
     if (!visible) {
       searchForm.style.opacity = '1';
       searchForm.style.pointerEvents = 'auto';
-      searchForm.style.width = window.innerWidth < 576 ? '200px' : '240px'; // responsive size
+      searchForm.style.width = window.innerWidth < 576 ? '200px' : '240px';
       setTimeout(() => searchForm.querySelector('input').focus(), 200);
     } else {
       searchForm.style.opacity = '0';
@@ -137,18 +123,19 @@
   });
 
   document.addEventListener('click', (e) => {
-    if (!searchForm.contains(e.target) && !searchToggle.contains(e.target)) {
+    if (!searchForm?.contains(e.target) && !searchToggle?.contains(e.target)) {
       searchForm.style.opacity = '0';
       searchForm.style.pointerEvents = 'none';
       searchForm.style.width = '0';
     }
   });
 
-  // Optional: Close search on resize
   window.addEventListener('resize', () => {
-    searchForm.style.opacity = '0';
-    searchForm.style.pointerEvents = 'none';
-    searchForm.style.width = '0';
+    if (searchForm) {
+      searchForm.style.opacity = '0';
+      searchForm.style.pointerEvents = 'none';
+      searchForm.style.width = '0';
+    }
   });
 </script>
 
