@@ -92,12 +92,13 @@ def process_order(request):
         quantities = cart.get_quants
         totals = cart.cart_totals()
 
-        payment_form = PaymentForm(request.POST)
-        my_shipping = request.session.get('my_shipping')  #  CORRECTED HERE
+        payment_method = request.POST.get('payment_method', 'cod')  # default to COD
+        billing_form = PaymentForm(request.POST)
+        my_shipping = request.session.get('my_shipping')
 
         if not my_shipping:
             messages.error(request, "Shipping information is missing. Please fill it out again.")
-            return redirect('checkout')  # or where your shipping form is
+            return redirect('checkout')
 
         full_name = my_shipping['shipping_full_name']
         email = my_shipping['shipping_email']
@@ -105,77 +106,57 @@ def process_order(request):
         shipping_address = f"{my_shipping['shipping_address1']}\n{my_shipping['shipping_address2']}\n{my_shipping['shipping_city']}\n{my_shipping['shipping_state']}\n{my_shipping['shipping_zipcode']}\n{my_shipping['shipping_country']}"
         amount_paid = totals
 
+        if payment_method == 'bank' and not billing_form.is_valid():
+            messages.error(request, "Please enter your name for bank transfer.")
+            return redirect('billing_info')
+
         if request.user.is_authenticated:
             user = request.user
-            create_order = Order(user=user, full_name=full_name, phone=phone, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
-            create_order.save()
-
-            # Add Order items
-            # Get the Order Id
-            order_id = create_order.pk
-
-            # Get Product Info
-            for product in cart_products():
-                # Get Product Id
-                product_id = product.id
-                # Get the Product Price
-                if product.is_on_sale:
-                    price = product.sale_price
-                else:
-                    price = product.price
-
-                # Get Quantity
-                for key,value in quantities().items():
-                    if int(key) == product.id:
-                        # Create Order Item
-                        create_order_item = OrderItem(order_id=order_id, product_id=product_id, user=user, price=price, quantity=value)
-                        create_order_item.save()
-
-            # Delete Ourt Cart After Purchase
-            for key in list(request.session.keys()):
-                if key == "session_key":
-                    # Delete the key
-                    del request.session[key]
-
-            # Delete Cart from database old_cart Field
-            current_user = Profile.objects.filter(user__id=request.user.id)
-            # Update
-            current_user.update(old_cart="")
-
+            order = Order(
+                user=user,
+                full_name=full_name,
+                phone=phone,
+                email=email,
+                shipping_address=shipping_address,
+                amount_paid=amount_paid,
+                payment_method=payment_method
+            )
         else:
-            create_order = Order(full_name=full_name, phone=phone, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
-            create_order.save()
+            order = Order(
+                full_name=full_name,
+                phone=phone,
+                email=email,
+                shipping_address=shipping_address,
+                amount_paid=amount_paid,
+                payment_method=payment_method
+            )
 
-            # Add Order items
-            # Get the Order Id
-            order_id = create_order.pk
+        order.save()
 
-            # Get Product Info
-            for product in cart_products():
-                # Get Product Id
-                product_id = product.id
-                # Get the Product Price
-                if product.is_on_sale:
-                    price = product.sale_price
-                else:
-                    price = product.price
+        for product in cart_products():
+            product_id = product.id
+            price = product.sale_price if product.is_on_sale else product.price
 
-                # Get Quantity
-                for key,value in quantities().items():
-                    if int(key) == product.id:
-                        # Create Order Item
-                        create_order_item = OrderItem(order_id=order_id, product_id=product_id, price=price, quantity=value)
-                        create_order_item.save()
+            for key, value in quantities().items():
+                if int(key) == product.id:
+                    OrderItem.objects.create(
+                        order_id=order.pk,
+                        product_id=product_id,
+                        user=request.user if request.user.is_authenticated else None,
+                        price=price,
+                        quantity=value
+                    )
 
-            # Delete Ourt Cart After Purchase
-            for key in list(request.session.keys()):
-                if key == "session_key":
-                    # Delete the key
-                    del request.session[key]
+        for key in list(request.session.keys()):
+            if key == "session_key":
+                del request.session[key]
 
-        messages.success(request, "Your order has been placed.")
+        if request.user.is_authenticated:
+            Profile.objects.filter(user_id=request.user.id).update(old_cart="")
+
+        messages.success(request, "Your order has been placed successfully!")
         return redirect('home')
-    
+
     messages.error(request, "You have to add products to your cart first.")
     return redirect('home')
 
@@ -186,7 +167,6 @@ def billing_info(request):
         quantities = cart.get_quants
         totals = cart.cart_totals()
 
-        # Store shipping data in session
         my_shipping = {
             'shipping_full_name': request.POST.get('shipping_full_name', ''),
             'shipping_phone': request.POST.get('shipping_phone', ''),
@@ -202,14 +182,22 @@ def billing_info(request):
         request.session['my_shipping'] = my_shipping
 
         billing_form = PaymentForm()
+        bank_account = {
+            'name': 'Shop Name',
+            'number': '1234567890',
+            'code': 'IFSC000123',
+            'bank': 'Bank of Example'
+        }
+
         return render(request, 'payment/billing_info.html', {
             'cart_products': cart_products,
             'quantities': quantities,
             'totals': totals,
             'shipping_info': my_shipping,
             'billing_form': billing_form,
+            'bank_account': bank_account,
         })
-    
+
     messages.error(request, "You have to add products to your cart first.")
     return redirect('home')
 

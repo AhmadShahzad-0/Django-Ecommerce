@@ -6,53 +6,68 @@
         <div class="col-lg-8">
 
             <div class="card shadow-sm border-0 rounded-4">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
-                    <h5 class="mb-0">🧾 Order #{{ order.id }}</h5>
-                    <span class="fw-semibold fs-5">${{ order.amount_paid }}</span>
+                <div class="card-header bg-primary text-white rounded-top-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">🧾 Order #{{ order.id }}</h5>
+                        <span class="fs-5 fw-semibold">${{ order.amount_paid }}</span>
+                    </div>
                 </div>
 
                 <div class="card-body p-4">
-
-                    <div class="mb-4">
-                        <h6 class="fw-bold text-muted">Customer Info</h6>
+                    
+                    <!-- Customer Info -->
+                    <section class="mb-4">
+                        <h6 class="text-muted fw-bold border-bottom pb-2 mb-3">👤 Customer Information</h6>
                         <p class="mb-1"><strong>Email:</strong> {{ order.email }}</p>
                         {% if order.date_shipped %}
                             <p><strong>Date Shipped:</strong> {{ order.date_shipped|date:"M d, Y - H:i A" }}</p>
                         {% else %}
                             <p><strong>Date Ordered:</strong> {{ order.date_ordered|date:"M d, Y - H:i A" }}</p>
                         {% endif %}
-                    </div>
+                    </section>
 
-                    <div class="mb-4">
-                        <h6 class="fw-bold text-muted">Shipping Details</h6>
+                    <!-- Shipping and Payment -->
+                    <section class="mb-4">
+                        <h6 class="text-muted fw-bold border-bottom pb-2 mb-3">📦 Shipping & 💳 Payment Details</h6>
                         <p class="mb-1"><strong>Name:</strong> {{ order.full_name }}</p>
                         <p class="mb-1"><strong>Phone:</strong> {{ order.phone }}</p>
-                        <p><strong>Address:</strong> {{ order.shipping_address }}</p>
-                    </div>
+                        <p class="mb-1"><strong>Address:</strong><br>{{ order.shipping_address|linebreaksbr }}</p>
+                        <p class="mb-0"><strong>Payment Method:</strong>
+                            <span class="badge 
+                                {% if order.payment_method == 'cod' %}bg-success
+                                {% elif order.payment_method == 'bank' %}bg-primary
+                                {% else %}bg-secondary{% endif %}">
+                                {{ order.get_payment_method_display_name }}
+                            </span>
+                        </p>
+                    </section>
 
-                    <div>
-                        <h6 class="fw-bold text-muted mb-3">Items in This Order</h6>
-                        <ul class="list-group mb-4">
+                    <!-- Items List -->
+                    <section class="mb-4">
+                        <h6 class="text-muted fw-bold border-bottom pb-2 mb-3">🛍️ Items in This Order</h6>
+                        <ul class="list-group">
                             {% for item in items %}
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <div>
                                     <strong>{{ item.product }}</strong><br>
-                                    <small class="text-muted">Quantity: {{ item.quantity }}</small>
+                                    <small class="text-muted">Qty: {{ item.quantity }}</small>
                                 </div>
                                 <span class="fw-semibold text-success">${{ item.price }}</span>
                             </li>
                             {% empty %}
-                            <li class="list-group-item text-muted text-center">No items in this order.</li>
+                            <li class="list-group-item text-center text-muted">No items found for this order.</li>
                             {% endfor %}
                         </ul>
-                    </div>
+                    </section>
 
-                    <div class="text-center">
+                    <!-- Shipped Toggle -->
+                    <div class="text-center mt-4">
                         <form method="POST" class="d-inline-block">
                             {% csrf_token %}
                             <input type="hidden" name="shipping_status" value="{% if order.shipped %}false{% else %}true{% endif %}">
                             <button type="submit"
-                                class="btn {% if order.shipped %}btn-danger{% else %}btn-success{% endif %} btn-lg px-4 shadow-sm">
+                                class="btn btn-lg px-4 shadow-sm
+                                    {% if order.shipped %}btn-danger{% else %}btn-success{% endif %}">
                                 {% if order.shipped %}
                                     🚫 Mark as Un-Shipped
                                 {% else %}

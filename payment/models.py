@@ -49,9 +49,15 @@ class Order(models.Model):
     date_ordered = models.DateTimeField(auto_now_add=True)
     shipped = models.BooleanField(default=False)
     date_shipped = models.DateTimeField(null=True, blank=True)
+    payment_method = models.CharField(max_length=20, choices=[('cod', 'Cash on Delivery'), ('bank', 'Bank Transfer')], default='cod')
+
 
     def __str__(self):
         return f'Order - {str(self.id)}'
+    
+    def get_payment_method_display_name(self):
+        return dict(self._meta.get_field('payment_method').choices).get(self.payment_method, 'Unknown')
+
     
 # Auto Add Shipping Date
 @receiver(pre_save, sender=Order)

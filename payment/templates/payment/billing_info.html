@@ -1,154 +1,163 @@
 {% extends 'store/base.html' %}
 {% load form_tags %}
+
 {% block content %}
 
 <!-- Header -->
 <header class="bg-dark py-5 text-center text-white">
     <div class="container">
-        <h1 class="display-5 fw-bold"><i class="bi bi-credit-card-2-front-fill me-2"></i>Billing Information</h1>
-        <p class="lead text-white-50 mb-0">Complete your order securely and efficiently.</p>
+        <h1 class="display-5 fw-bold">
+            <i class="bi bi-credit-card-2-front-fill me-2"></i>Choose Payment Method
+        </h1>
+        <p class="lead text-white-50 mb-0">Select how you'd like to pay for your order.</p>
     </div>
 </header>
 
-<!-- Main Checkout Layout -->
+<!-- Main Checkout Section -->
 <div class="container my-5">
     <div class="row gy-4 justify-content-center">
 
-<!-- Billing Information (Main Focus) -->
-<div class="col-12 col-lg-8">
-    <div class="card border-0 shadow-lg rounded-4 mb-4">
-        <div class="card-header bg-dark text-white d-flex align-items-center">
-            <i class="bi bi-person-vcard me-2 fs-5"></i>
-            <h5 class="mb-0">Billing Information</h5>
-        </div>
-        <div class="card-body px-4 py-5">
-            <form method="POST" action="{% url 'process_order' %}">
-                {% csrf_token %}
-
-                <div class="mb-3 input-group">
-                    <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
-                    {{ billing_form.card_name|add_class:"form-control" }}
+        <!-- Payment & Billing Section -->
+        <div class="col-12 col-lg-8">
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-header bg-dark text-white d-flex align-items-center">
+                    <i class="bi bi-wallet2 me-2 fs-5"></i>
+                    <h5 class="mb-0">Payment & Billing</h5>
                 </div>
+                <div class="card-body px-4 py-5">
+                    <form method="POST" action="{% url 'process_order' %}">
+                        {% csrf_token %}
 
-                <div class="mb-3 input-group">
-                    <span class="input-group-text bg-light"><i class="bi bi-credit-card-2-back"></i></span>
-                    {{ billing_form.card_number|add_class:"form-control" }}
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3 input-group">
-                        <span class="input-group-text bg-light"><i class="bi bi-calendar-event"></i></span>
-                        {{ billing_form.card_exp_date|add_class:"form-control" }}
-                    </div>
-                    <div class="col-md-6 mb-3 input-group">
-                        <span class="input-group-text bg-light"><i class="bi bi-shield-lock"></i></span>
-                        {{ billing_form.card_cvv_number|add_class:"form-control" }}
-                    </div>
-                </div>
-
-                <div class="mb-3 input-group">
-                    <span class="input-group-text bg-light"><i class="bi bi-house-door"></i></span>
-                    {{ billing_form.card_address|add_class:"form-control" }}
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3 input-group">
-                        <span class="input-group-text bg-light"><i class="bi bi-geo-alt"></i></span>
-                        {{ billing_form.card_city|add_class:"form-control" }}
-                    </div>
-                    <div class="col-md-6 mb-3 input-group">
-                        <span class="input-group-text bg-light"><i class="bi bi-map"></i></span>
-                        {{ billing_form.card_state|add_class:"form-control" }}
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3 input-group">
-                        <span class="input-group-text bg-light"><i class="bi bi-envelope"></i></span>
-                        {{ billing_form.card_zipcode|add_class:"form-control" }}
-                    </div>
-                    <div class="col-md-6 mb-3 input-group">
-                        <span class="input-group-text bg-light"><i class="bi bi-globe2"></i></span>
-                        {{ billing_form.card_country|add_class:"form-control" }}
-                    </div>
-                </div>
-
-                <div class="d-grid mt-4">
-                    <button type="submit" class="btn btn-dark btn-lg rounded-3 shadow-sm">
-                        <i class="bi bi-credit-card-2-front me-2"></i>Pay Now
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-
-    <!-- Order Summary + Shipping Info in One Column -->
-    <div class="col-12 col-lg-4">
-        <!-- Order Summary -->
-        <div class="card border-0 shadow-sm rounded-4 mb-4">
-            <div class="card-header bg-primary text-white d-flex align-items-center">
-                <i class="bi bi-receipt me-2 fs-5"></i>
-                <h6 class="mb-0">Order Summary</h6>
-            </div>
-            <ul class="list-group list-group-flush small">
-                {% for product in cart_products %}
-                    <li class="list-group-item d-flex justify-content-between align-items-start">
-                        <div class="me-auto">
-                            <div class="fw-semibold">{{ product.name }}</div>
-                            {% for key, value in quantities.items %}
-                                {% if key == product.id|slugify %}
-                                    <small class="text-muted"><i class="bi bi-basket me-1"></i>Qty: {{ value }}</small>
-                                {% endif %}
-                            {% endfor %}
+                        <!-- Payment Method -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Payment Method</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="payment_method" value="cod" id="cod" checked>
+                                <label class="form-check-label" for="cod">Cash on Delivery</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="payment_method" value="bank" id="bank">
+                                <label class="form-check-label" for="bank">Bank Transfer</label>
+                            </div>
                         </div>
-                        <span class="badge bg-dark text-light rounded-pill mt-2">
-                            {% if product.is_on_sale %}
-                                ${{ product.sale_price }}
-                            {% else %}
-                                ${{ product.price }}
-                            {% endif %}
-                        </span>
-                    </li>
-                {% endfor %}
-                <li class="list-group-item d-flex justify-content-between border-top pt-2">
-                    <strong><i class="bi bi-cash-coin me-1"></i>Total:</strong>
-                    <strong>${{ totals }}</strong>
-                </li>
-            </ul>
-            <div class="card-footer bg-light text-end">
-                <a href="{% url 'cart_summary' %}" class="btn btn-outline-primary btn-sm">
-                    <i class="bi bi-pencil-square me-1"></i>Update Cart
-                </a>
+
+                        <!-- Bank Transfer Details -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">If you selected Bank Transfer, fill these fields:</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
+                                {{ billing_form.card_name|add_class:"form-control" }}
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-light"><i class="bi bi-credit-card-2-front"></i></span>
+                                {{ billing_form.card_number|add_class:"form-control" }}
+                            </div>
+                        </div>
+
+                        <!-- Static Bank Info -->
+                        <div id="bank-details" class="bg-light p-3 rounded mb-4 d-none">
+                            <h6><i class="bi bi-bank me-1"></i>Bank Details</h6>
+                            <p class="mb-1"><strong>Account Name:</strong> {{ bank_account.name }}</p>
+                            <p class="mb-1"><strong>Account Number:</strong> {{ bank_account.number }}</p>
+                            <p class="mb-1"><strong>IFSC/IBAN:</strong> {{ bank_account.code }}</p>
+                            <p class="mb-0"><strong>Bank Name:</strong> {{ bank_account.bank }}</p>
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-dark btn-lg rounded-3 shadow-sm">
+                                <i class="bi bi-credit-card-2-front me-2"></i>Place Order
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
-        <!-- Shipping Information -->
-        <div class="card border-0 shadow-sm rounded-4">
-            <div class="card-header bg-secondary text-white d-flex align-items-center">
-                <i class="bi bi-truck me-2 fs-5"></i>
-                    <h6 class="mb-0">Shipping Information</h6>
+        <!-- Order Summary & Shipping Info -->
+        <div class="col-12 col-lg-4">
+
+            <!-- Order Summary -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-header bg-primary text-white d-flex align-items-center">
+                    <i class="bi bi-receipt me-2 fs-5"></i>
+                    <h6 class="mb-0">Order Summary</h6>
+                </div>
+                <ul class="list-group list-group-flush small">
+                    {% for product in cart_products %}
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="me-auto">
+                                <div class="fw-semibold">{{ product.name }}</div>
+                                {% for key, value in quantities.items %}
+                                    {% if key == product.id|slugify %}
+                                        <small class="text-muted"><i class="bi bi-basket me-1"></i>Qty: {{ value }}</small>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <span class="badge bg-dark text-light rounded-pill mt-2">
+                                {% if product.is_on_sale %}
+                                    ${{ product.sale_price }}
+                                {% else %}
+                                    ${{ product.price }}
+                                {% endif %}
+                            </span>
+                        </li>
+                    {% endfor %}
+                    <li class="list-group-item d-flex justify-content-between border-top pt-2">
+                        <strong><i class="bi bi-cash-coin me-1"></i>Total:</strong>
+                        <strong>${{ totals }}</strong>
+                    </li>
+                </ul>
+                <div class="card-footer bg-light text-end">
+                    <a href="{% url 'cart_summary' %}" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-pencil-square me-1"></i>Update Cart
+                    </a>
+                </div>
             </div>
-            <div class="card-body small">
-                <p class="mb-1"><i class="bi bi-person me-1"></i>{{ shipping_info.shipping_full_name }}</p>
-                <p class="mb-1"><i class="bi bi-telephone me-1"></i>{{ shipping_info.shipping_phone }}</p>
-                <p class="mb-1"><i class="bi bi-envelope me-1"></i>{{ shipping_info.shipping_email }}</p>
-                <p class="mb-1"><i class="bi bi-house-door me-1"></i>{{ shipping_info.shipping_address1 }}</p>
+
+            <!-- Shipping Info -->
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-secondary text-white d-flex align-items-center">
+                    <i class="bi bi-truck me-2 fs-5"></i>
+                    <h6 class="mb-0">Shipping Information</h6>
+                </div>
+                <div class="card-body small">
+                    <p class="mb-1"><i class="bi bi-person me-1"></i>{{ shipping_info.shipping_full_name }}</p>
+                    <p class="mb-1"><i class="bi bi-telephone me-1"></i>{{ shipping_info.shipping_phone }}</p>
+                    <p class="mb-1"><i class="bi bi-envelope me-1"></i>{{ shipping_info.shipping_email }}</p>
+                    <p class="mb-1"><i class="bi bi-house-door me-1"></i>{{ shipping_info.shipping_address1 }}</p>
                     {% if shipping_info.shipping_address2 %}
                         <p class="mb-1">{{ shipping_info.shipping_address2 }}</p>
                     {% endif %}
-                <p class="mb-1"><i class="bi bi-geo-alt me-1"></i>{{ shipping_info.shipping_city }}, {{ shipping_info.shipping_state }} {{ shipping_info.shipping_zipcode }}</p>
-                <p class="mb-3"><i class="bi bi-globe2 me-1"></i>{{ shipping_info.shipping_country }}</p>
-
-                <a href="{% url 'checkout' %}" class="btn btn-outline-secondary btn-sm">
-                    <i class="bi bi-pencil-square me-1"></i>Update Shipping
-                </a>
+                    <p class="mb-1"><i class="bi bi-geo-alt me-1"></i>{{ shipping_info.shipping_city }}, {{ shipping_info.shipping_state }} {{ shipping_info.shipping_zipcode }}</p>
+                    <p class="mb-3"><i class="bi bi-globe2 me-1"></i>{{ shipping_info.shipping_country }}</p>
+                    <a href="{% url 'checkout' %}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-pencil-square me-1"></i>Update Shipping
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
 
+{% block extra_js %}
+<!-- Toggle Bank Info Based on Selection -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const cod = document.getElementById('cod');
+    const bank = document.getElementById('bank');
+    const bankDetails = document.getElementById('bank-details');
+
+    function toggleBankDetails() {
+        bankDetails.classList.toggle("d-none", !bank.checked);
+    }
+
+    cod.addEventListener("change", toggleBankDetails);
+    bank.addEventListener("change", toggleBankDetails);
+
+    // Initialize visibility on page load
+    toggleBankDetails();
+});
+</script>
+{% endblock %}
 {% endblock %}
