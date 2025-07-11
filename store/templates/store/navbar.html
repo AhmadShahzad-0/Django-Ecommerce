@@ -3,39 +3,47 @@
   Enjoy Free Shipping on Orders Above 3,000
 </div>
 
-<!-- Main Navbar Section -->
+<!-- Main Navbar -->
 <nav class="bg-white border-bottom shadow-sm sticky-top">
 
-  <!-- First Row -->
+  <!-- Navbar Main Row -->
   <div class="container-fluid py-3 px-3 px-md-4 position-relative d-flex flex-wrap justify-content-between align-items-center">
 
-    <!-- Left: Search -->
-    <form class="d-flex align-items-center mb-2 mb-md-0" action="{% url 'search_products' %}" method="GET">
-      <input class="form-control rounded-pill px-3 py-2 border" type="search" name="q" placeholder="Search" style="min-width: 180px;">
-      <button class="btn ms-2" type="submit">
-        <i class="bi bi-search fs-5"></i>
+    <!-- Left: Hamburger and Desktop Search -->
+    <div class="d-flex align-items-center">
+      <!-- Mobile: Toggler -->
+      <button class="navbar-toggler d-md-none me-3" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
+        <span class="navbar-toggler-icon"></span>
       </button>
-    </form>
 
-    <!-- Center: Logo (centered on large screens, stacked on small) -->
-    <div class="position-absolute top-50 start-50 translate-middle d-none d-md-block">
-      <a class="navbar-brand fw-bold fs-3 text-dark" href="{% url 'home' %}">Artwork</a>
+      <!-- Desktop Search -->
+      <form class="d-none d-md-flex align-items-center" action="{% url 'search_products' %}" method="GET">
+        <input class="form-control rounded-pill px-3 py-2 border" type="search" name="q" placeholder="Search" style="min-width: 180px;">
+        <button class="btn ms-2" type="submit">
+          <i class="bi bi-search fs-5"></i>
+        </button>
+      </form>
     </div>
-    <div class="w-100 d-flex justify-content-center d-md-none mb-2">
-      <a class="navbar-brand fw-bold fs-3 text-dark" href="{% url 'home' %}">Artwork</a>
-    </div>
 
-    <!-- Right: Account Dropdown + Cart -->
-    <div class="d-flex align-items-center ms-auto">
+    <!-- Center: Logo -->
+    <div class="d-none d-md-block position-absolute start-50 translate-middle-x" style="top: 25%; transform: translateX(-50%) translateY(-50%);">
+  <a class="navbar-brand fw-bold fs-3 text-dark m-0" href="{% url 'home' %}">Artwork</a>
+</div>
 
+
+
+    <!-- Mobile Center Logo -->
+    <a class="navbar-brand fw-bold fs-3 text-dark d-md-none mx-auto mb-2" href="{% url 'home' %}">Artwork</a>
+
+    <!-- Right: Account + Cart -->
+    <div class="d-flex align-items-center">
       {% if user.is_authenticated %}
-      <!-- Account Dropdown for Logged-in User -->
+      <!-- Account Dropdown -->
       <div class="dropdown me-3">
         <a class="text-dark d-flex align-items-center dropdown-toggle text-decoration-none" href="#" role="button" data-bs-toggle="dropdown">
           <i class="bi bi-person fs-5 me-1"></i>
-          <span class="fw-semibold">Account</span>
         </a>
-        <ul class="dropdown-menu shadow-sm border-0 rounded-3 animate__animated animate__fadeIn">
+        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3 animate__animated animate__fadeIn">
           <li><a class="dropdown-item" href="{% url 'update_user' %}">Update Profile</a></li>
           <li><a class="dropdown-item" href="{% url 'update_info' %}">Update Info</a></li>
           <li><hr class="dropdown-divider"></li>
@@ -48,10 +56,8 @@
         </ul>
       </div>
       {% else %}
-      <!-- Login for Guests -->
       <a href="{% url 'login' %}" class="text-dark me-3 d-flex align-items-center">
-        <i class="bi bi-person fs-5 me-1"></i>
-        <span class="fw-semibold">Login</span>
+        <i class="bi bi-person fs-5"></i>
       </a>
       {% endif %}
 
@@ -60,14 +66,12 @@
         <i class="bi bi-cart fs-5"></i>
         <span id="cart_quantity" class="badge bg-dark text-white ms-2 rounded-pill">{{ cart|length }}</span>
       </a>
-
     </div>
   </div>
 
-  <!-- Second Row: Nav Links -->
-  <div class="border-top">
+  <!-- Nav Links Row (Desktop) -->
+  <div class="border-top d-none d-md-block">
     <div class="container-fluid py-2 d-flex justify-content-center gap-4 flex-wrap">
-
       <a class="nav-link text-dark fw-semibold" href="{% url 'home' %}">Home</a>
       <a class="nav-link text-dark fw-semibold" href="{% url 'about' %}">About</a>
 
@@ -83,9 +87,7 @@
         </ul>
       </div>
 
-      {% if user.is_authenticated %}
-
-      {% if user.is_superuser %}
+      {% if user.is_authenticated and user.is_superuser %}
       <!-- Orders Dropdown -->
       <div class="dropdown">
         <a class="nav-link dropdown-toggle text-dark fw-semibold" href="#" data-bs-toggle="dropdown">
@@ -97,11 +99,56 @@
         </ul>
       </div>
       {% endif %}
-      {% endif %}
-
     </div>
   </div>
+
+  <!-- Mobile Menu Collapse -->
+  <div class="collapse navbar-collapse d-md-none" id="mobileMenu">
+    <ul class="navbar-nav flex-column ps-3 pb-3">
+      <li class="nav-item">
+        <a class="nav-link text-dark fw-semibold" href="{% url 'home' %}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark fw-semibold" href="{% url 'about' %}">About</a>
+      </li>
+
+      <!-- Categories Dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-dark fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+          Categories
+        </a>
+        <ul class="dropdown-menu shadow-sm border-0 rounded-3">
+          <li><a class="dropdown-item" href="{% url 'category_summary' %}">🛍️ All Products</a></li>
+          <li><a class="dropdown-item" href="{% url 'category' "Men's-Perfume" %}">👔 Men's Perfume</a></li>
+          <li><a class="dropdown-item" href="{% url 'category' "Women's-Perfume" %}">💄 Women's Perfume</a></li>
+        </ul>
+      </li>
+
+      {% if user.is_authenticated and user.is_superuser %}
+      <!-- Orders Dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-dark fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+          Orders
+        </a>
+        <ul class="dropdown-menu shadow-sm border-0 rounded-3">
+          <li><a class="dropdown-item" href="{% url 'shipped_dash' %}">Shipped Orders</a></li>
+          <li><a class="dropdown-item" href="{% url 'not_shipped_dash' %}">Un-Shipped Orders</a></li>
+        </ul>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
 </nav>
+
+<!-- Mobile Search Bar -->
+<div class="d-md-none bg-white px-3 py-2 border-top border-bottom shadow-sm">
+  <form class="d-flex" action="{% url 'search_products' %}" method="GET">
+    <input class="form-control rounded-pill px-3 py-2 border" type="search" name="q" placeholder="Search">
+    <button class="btn ms-2" type="submit">
+      <i class="bi bi-search fs-5"></i>
+    </button>
+  </form>
+</div>
 
 <script>
   const searchToggle = document.getElementById('searchToggle');
