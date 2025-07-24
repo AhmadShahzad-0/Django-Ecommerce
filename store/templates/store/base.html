@@ -47,24 +47,41 @@
     }
 
     footer a {
-        position: relative;
-        transition: color 0.2s ease;
-    }
+    position: relative;
+    color: #212529; /* Default dark text */
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
 
-    footer a::after {
-        content: "";
-        position: absolute;
-        bottom: -3px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background-color: #f8f9fa;
-        transition: width 0.3s ease;
-    }
+footer a::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #0d6efd; /* Primary Blue underline */
+    transition: width 0.3s ease;
+}
 
-    footer a:hover::after {
-        width: 100%;
-    }
+footer a:hover {
+    color: #0d6efd; 
+}
+
+footer a:hover::after {
+    width: 100%;
+}
+
+
+footer i {
+    color: #212529;
+    transition: all 0.2s ease;
+}
+
+footer i:hover {
+    color: #0d6efd;
+    transform: scale(1.1);
+}
 
     .form-control:focus {
         box-shadow: 0 0 0 0.2rem rgba(255,255,255,0.2);
@@ -112,6 +129,27 @@
         height: 60vh !important;
     }
   }
+
+  #preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: #ffffff;
+  z-index: 1050;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.6s ease, visibility 0.6s;
+}
+
+body.loaded #preloader {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
   </style>
 
 </head>
@@ -143,69 +181,77 @@
         {% endif %}
     </div>
 
+    <!-- Preloader -->
+    <div id="preloader">
+      <div class="preloader-inner text-center">
+        <img src="{% static 'assets/Devloop2.jpg' %}" alt="Loading..." width="80" height="80">
+      </div>
+    </div>
+
+
     <!-- Main Content Block -->
     {% block content %}
     {% endblock %}
 
     <!-- Footer -->
-    <footer class="bg-dark text-white pt-5 pb-4 mt-5">
-        <div class="container text-md-left">
-            <div class="row">
+<footer class="bg-white text-dark pt-5 pb-4 mt-5 border-top">
+    <div class="container text-md-left">
+        <div class="row">
 
-                <!-- About -->
-                <div class="col-md-3 mb-4">
-                    <h5 class="text-uppercase fw-bold mb-3">About Us</h5>
-                    <p>We offer the best quality perfumes at unbeatable prices. Trusted by thousands of happy customers.</p>
-                    <p><i class="bi bi-geo-alt-fill me-2"></i>123 Fragrance Ave, City, Country</p>
-                    <p><i class="bi bi-envelope-fill me-2"></i>support@example.com</p>
-                    <p><i class="bi bi-telephone-fill me-2"></i>+1 (123) 456-7890</p>
-                </div>
-
-                <!-- Shop -->
-                <div class="col-md-2 mb-4">
-                    <h5 class="text-uppercase fw-bold mb-3">Shop</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'category_summary' %}" class="text-white text-decoration-none">All Products</a></li>
-                        <li><a href="{% url 'category' "Men's-Perfume" %}" class="text-white text-decoration-none">Men's Perfume</a></li>
-                        <li><a href="{% url 'category' "Women's-Perfume" %}" class="text-white text-decoration-none">Women's Perfume</a></li>
-                        <li><a href="{% url 'home' %}" class="text-white text-decoration-none">Home</a></li>
-                    </ul>
-                </div>
-
-                <!-- Support -->
-                <div class="col-md-2 mb-4">
-                    <h5 class="text-uppercase fw-bold mb-3">Support</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white text-decoration-none">FAQs</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Shipping & Returns</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Order Tracking</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Contact Us</a></li>
-                    </ul>
-                </div>
-
-                <!-- Newsletter -->
-                <div class="col-md-5 mb-4">
-                    <h5 class="text-uppercase fw-bold mb-3">Subscribe to Our Newsletter</h5>
-                    <form class="d-flex">
-                        <input type="email" class="form-control me-2" placeholder="Enter your email">
-                        <button class="btn btn-outline-light" type="submit">Subscribe</button>
-                    </form>
-                    <div class="mt-4">
-                        <h6 class="fw-semibold mb-2">Follow us</h6>
-                        <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-5"></i></a>
-                        <a href="#" class="text-white me-3"><i class="bi bi-instagram fs-5"></i></a>
-                        <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-5"></i></a>
-                        <a href="#" class="text-white"><i class="bi bi-youtube fs-5"></i></a>
-                    </div>
-                </div>
-
+            <!-- About -->
+            <div class="col-md-3 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">About Us</h5>
+                <p>We offer the best quality perfumes at unbeatable prices. Trusted by thousands of happy customers.</p>
+                <p><i class="bi bi-geo-alt-fill me-2"></i>123 Fragrance Ave, City, Country</p>
+                <p><i class="bi bi-envelope-fill me-2"></i>support@example.com</p>
+                <p><i class="bi bi-telephone-fill me-2"></i>+1 (123) 456-7890</p>
             </div>
-            <hr class="border-light" />
-            <div class="text-center">
-                <p class="mb-0">&copy; Developed by Ahmad 2025. All Rights Reserved.</p>
+
+            <!-- Shop -->
+            <div class="col-md-2 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">Shop</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'category_summary' %}" class="text-decoration-none">All Products</a></li>
+                    <li><a href="{% url 'category' "Men's-Perfume" %}" class="text-decoration-none">Men's Perfume</a></li>
+                    <li><a href="{% url 'category' "Women's-Perfume" %}" class="text-decoration-none">Women's Perfume</a></li>
+                    <li><a href="{% url 'home' %}" class="text-decoration-none">Home</a></li>
+                </ul>
             </div>
+
+            <!-- Support -->
+            <div class="col-md-2 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">Support</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-decoration-none">FAQs</a></li>
+                    <li><a href="#" class="text-decoration-none">Shipping & Returns</a></li>
+                    <li><a href="#" class="text-decoration-none">Order Tracking</a></li>
+                    <li><a href="#" class="text-decoration-none">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="col-md-5 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">Subscribe to Our Newsletter</h5>
+                <form class="d-flex">
+                    <input type="email" class="form-control me-2" placeholder="Enter your email">
+                    <button class="btn btn-outline-dark" type="submit">Subscribe</button>
+                </form>
+                <div class="mt-4">
+                    <h6 class="fw-semibold mb-2">Follow us</h6>
+                    <a href="#" class="text-dark me-3"><i class="bi bi-facebook fs-5"></i></a>
+                    <a href="#" class="text-dark me-3"><i class="bi bi-instagram fs-5"></i></a>
+                    <a href="#" class="text-dark me-3"><i class="bi bi-twitter fs-5"></i></a>
+                    <a href="#" class="text-dark"><i class="bi bi-youtube fs-5"></i></a>
+                </div>
+            </div>
+
         </div>
-    </footer>
+        <hr class="border-dark" />
+        <div class="text-center">
+            <p class="mb-0">&copy; Developed by Ahmad 2025. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
     <!-- jQuery (load cleanly without integrity check) -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
@@ -230,6 +276,13 @@
                 }, 5000);
             });
         });
+
+            window.addEventListener('load', function () {
+    setTimeout(function () {
+      document.body.classList.add('loaded');
+    }, 1000); // Force loader to stay for seconds
+  });
+
     </script>
     {% block extra_js %}{% endblock %}
 </body>
