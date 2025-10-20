@@ -119,46 +119,98 @@
     </div>
 </section>
 
-<div class="container my-5">
-  <div class="row shadow-lg rounded-4 overflow-hidden" style="max-height: 700px;">
-    
-    <!-- Left Image -->
-    <div class="col-lg-6 d-none d-lg-block p-0">
-      <div style="height: 100%; width: 100%;">
-        <img src="{% static 'assets/p3.jpg' %}" 
-             alt="Contact Us" 
-             style="height: 100%; width: 100%; object-fit: cover;">
-      </div>
-    </div>
+<!-- Feature Cards Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <!-- Intense Essence Card -->
+            <div class="col-md-4 col-lg-4">
+                <div class="card border-0 bg-white text-center h-100 shadow-sm"
+                    style="border-radius: 12px; padding: 2rem 1.5rem; transition: transform 0.3s ease;"
+                    onmouseover="this.style.transform='translateY(-5px)'"
+                    onmouseout="this.style.transform='translateY(0)'">
+                    
+                    <!-- Flame Icon -->
+                    <div class="mb-4 d-flex justify-content-center">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #ff6b35, #ff8e53, #ffa726); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.5 14.5L12 11L15.5 14.5L14 16L12 14L10 16L8.5 14.5Z" fill="white"/>
+                                <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM12 8C13.1 8 14 8.9 14 10V12C14 13.1 13.1 14 12 14C10.9 14 10 13.1 10 12V10C10 8.9 10.9 8 12 8Z" fill="white"/>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <h4 class="fw-bold mb-3" style="font-family: serif; color: #333; font-size: 1.4rem;">
+                        Intense Essence
+                    </h4>
+                    
+                    <p class="text-muted mb-0" style="line-height: 1.6; font-size: 1rem;">
+                        Crafted with <strong>40% Oil</strong> for deep, powerful scent that lasts
+                    </p>
+                </div>
+            </div>
 
-    <!-- Right Form -->
-    <div class="col-lg-6 bg-white px-5 py-0 d-flex align-items-center">
-      <div style="width: 100%;">
-        <h3 class="mb-4 fw-bold">Get in Touch</h3>
-        <form>
-          <div class="mb-3">
-            <label for="name" class="form-label fw-semibold">Your Name</label>
-            <input type="text" class="form-control rounded-3" id="name" placeholder="John Doe" required>
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label fw-semibold">Email address</label>
-            <input type="email" class="form-control rounded-3" id="email" placeholder="name@example.com" required>
-          </div>
-          <div class="mb-3">
-            <label for="subject" class="form-label fw-semibold">Subject</label>
-            <input type="text" class="form-control rounded-3" id="subject" placeholder="Let's talk..." required>
-          </div>
-          <div class="mb-3">
-            <label for="message" class="form-label fw-semibold">Message</label>
-            <textarea class="form-control rounded-3" id="message" rows="4" placeholder="Write your message here..." required></textarea>
-          </div>
-          <button type="submit" class="btn btn-dark rounded-pill px-4 py-2">Send Message</button>
-        </form>
-      </div>
+            <!-- All-Day Strength Card -->
+            <div class="col-md-4 col-lg-4">
+                <div class="card border-0 bg-white text-center h-100 shadow-sm"
+                    style="border-radius: 12px; padding: 2rem 1.5rem; transition: transform 0.3s ease;"
+                    onmouseover="this.style.transform='translateY(-5px)'"
+                    onmouseout="this.style.transform='translateY(0)'">
+                    
+                    <!-- Perfume Bottle Icon -->
+                    <div class="mb-4 d-flex justify-content-center">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #2c3e50, #34495e); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L14 4H20V6H18L16 8H20V10H18L16 12H20V14H18L16 16H20V18H18L16 20H8L6 18H4V16H6L8 14H4V12H6L8 10H4V8H6L8 6H4V4H10L12 2Z" fill="white"/>
+                                <path d="M10 6H14V8H10V6Z" fill="white"/>
+                                <path d="M10 10H14V12H10V10Z" fill="white"/>
+                                <path d="M10 14H14V16H10V14Z" fill="white"/>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <h4 class="fw-bold mb-3" style="font-family: serif; color: #333; font-size: 1.4rem;">
+                        All-Day Strength
+                    </h4>
+                    
+                    <p class="text-muted mb-0" style="line-height: 1.6; font-size: 1rem;">
+                        Enjoy up to 12 hours of lasting fragrance with powerful projection
+                    </p>
+                </div>
+            </div>
+
+            <!-- Heat Resistant Card -->
+            <div class="col-md-4 col-lg-4">
+                <div class="card border-0 bg-white text-center h-100 shadow-sm"
+                    style="border-radius: 12px; padding: 2rem 1.5rem; transition: transform 0.3s ease;"
+                    onmouseover="this.style.transform='translateY(-5px)'"
+                    onmouseout="this.style.transform='translateY(0)'">
+                    
+                    <!-- Sun with Thermometer Icon -->
+                    <div class="mb-4 d-flex justify-content-center">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #ffd700, #ffed4e); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="8" fill="#ff6b35"/>
+                                <path d="M12 2L13 4H15L14 6L16 7L15 9L17 10L16 12L18 13L17 15L19 16L18 18L20 19L19 21L21 22L20 20L18 19L19 17L17 16L18 14L16 13L17 11L15 10L16 8L14 7L15 5L13 4L12 2Z" fill="white"/>
+                                <rect x="18" y="2" width="2" height="8" rx="1" fill="#ff4757"/>
+                                <rect x="17" y="8" width="4" height="2" rx="1" fill="#ff4757"/>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <h4 class="fw-bold mb-3" style="font-family: serif; color: #333; font-size: 1.4rem;">
+                        Heat Resistant
+                    </h4>
+                    
+                    <p class="text-muted mb-0" style="line-height: 1.6; font-size: 1rem;">
+                        Perfectly built for Pakistan's hot climate, stays fresh all day
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-    
-  </div>
-</div>
+</section>
+
 
 
 
