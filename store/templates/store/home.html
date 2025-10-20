@@ -287,175 +287,220 @@
     </div>
 </section>
 
-<!-- Section-->
-<section class="py-5">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="fw-bolder text-decoration-underline">Our Products</h2>
-            <p class="lead text-muted">Discover our exclusive range of products</p>
-        </div>
-    </div>
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
-            {% for product in products %}
-            <div class="col mb-4">
-                <a href="{% url 'product' product.id %}" class="text-decoration-none text-dark">
-                    <div class="card h-100 border-0 bg-white position-relative"
-                        style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;"
-                        onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 4px 16px rgba(0, 0, 0, 0.15)'"
-                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.1)'">
-
-                        {% if product.is_on_sale %}
-                        <div class="position-absolute" style="top: 8px; left: 8px; z-index: 2;">
-                            <span class="badge bg-danger text-white px-2 py-1"
-                                style="font-size: 0.75rem; border-radius: 4px;">
-                                Sale
-                            </span>
-                        </div>
-                        {% endif %}
-
-                        <!-- Product image -->
-                        <div class="position-relative" style="width: 100%; padding-top: 100%; background-color: #f8f9fa;">
-                            <img class="position-absolute top-0 start-0 w-100 h-100" 
-                                src="{{ product.image.url }}" alt="{{ product.name }}"
-                                style="object-fit: cover; border-radius: 8px 8px 0 0;" />
-                        </div>
-
-                        <!-- Product details -->
-                        <div class="card-body p-3 text-center">
-                            <h5 class="card-title mb-2" style="font-size: 1.1rem; font-weight: 600; color: #333;">
-                                {{ product.name }}
-                            </h5>
-
-                            {% if product.is_on_sale %}
-                            <div class="mb-2">
-                                <span class="text-muted text-decoration-line-through me-2" style="font-size: 0.9rem;">
-                                    Rs.{{ product.price }}
-                                </span>
-                                <span style="font-size: 1.1rem; color: #333;">
-                                    Rs.{{ product.sale_price }}
-                                </span>
-                            </div>
-                            {% else %}
-                            <div class="mb-2" style="font-size: 1.1rem; color: #333;">Rs.{{ product.price }}</div>
-                            {% endif %}
-
-                            <div class="text-muted" style="font-size: 0.85rem;">
-                                {{ product.category }}
-                            </div>
-                        </div>
-
-                        <!-- Add to Cart Button -->
-                        <div class="card-footer bg-transparent border-0 text-center p-3">
-                            <button class="btn btn-dark btn-sm px-4 py-2 rounded"
-                                style="font-size: 0.85rem; background-color: #333; border: none;"
-                                onmouseover="this.style.backgroundColor='#555'"
-                                onmouseout="this.style.backgroundColor='#333'">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            {% endfor %}
-
-
-        </div>
-    </div>
-</section>
-
 <!-- Feature Cards Section -->
 <section class="py-5">
-    <div class="container">
-        <div class="row g-4 justify-content-center">
-            <!-- Intense Essence Card -->
-            <div class="col-md-4 col-lg-4">
-                <div class="card border-0 bg-white text-center h-100 shadow-sm"
-                    style="border-radius: 12px; padding: 2rem 1.5rem; transition: transform 0.3s ease;"
-                    onmouseover="this.style.transform='translateY(-5px)'"
-                    onmouseout="this.style.transform='translateY(0)'">
-                    
-                    <!-- Flame Icon -->
-                    <div class="mb-4 d-flex justify-content-center">
-                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #ff6b35, #ff8e53, #ffa726); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);">
-                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8.5 14.5L12 11L15.5 14.5L14 16L12 14L10 16L8.5 14.5Z" fill="white"/>
-                                <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM12 8C13.1 8 14 8.9 14 10V12C14 13.1 13.1 14 12 14C10.9 14 10 13.1 10 12V10C10 8.9 10.9 8 12 8Z" fill="white"/>
-                            </svg>
-                        </div>
-                    </div>
-                    
-                    <h4 class="fw-bold mb-3" style="font-family: serif; color: #333; font-size: 1.4rem;">
-                        Intense Essence
-                    </h4>
-                    
-                    <p class="text-muted mb-0" style="line-height: 1.6; font-size: 1rem;">
-                        Crafted with <strong>40% Oil</strong> for deep, powerful scent that lasts
-                    </p>
-                </div>
-            </div>
+  <div class="container">
+      <div class="row g-4 justify-content-center">
+          <!-- Intense Essence Card -->
+          <div class="col-md-4 col-lg-4">
+              <div class="card border-0 bg-white text-center h-100 shadow-sm"
+                  style="border-radius: 12px; padding: 2rem 1.5rem; transition: transform 0.3s ease;"
+                  onmouseover="this.style.transform='translateY(-5px)'"
+                  onmouseout="this.style.transform='translateY(0)'">
+                  
+                  <!-- Flame Icon -->
+                  <div class="mb-4 d-flex justify-content-center">
+                      <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #ff6b35, #ff8e53, #ffa726); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);">
+                          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M8.5 14.5L12 11L15.5 14.5L14 16L12 14L10 16L8.5 14.5Z" fill="white"/>
+                              <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM12 8C13.1 8 14 8.9 14 10V12C14 13.1 13.1 14 12 14C10.9 14 10 13.1 10 12V10C10 8.9 10.9 8 12 8Z" fill="white"/>
+                          </svg>
+                      </div>
+                  </div>
+                  
+                  <h4 class="fw-bold mb-3" style="font-family: serif; color: #333; font-size: 1.4rem;">
+                      Intense Essence
+                  </h4>
+                  
+                  <p class="text-muted mb-0" style="line-height: 1.6; font-size: 1rem;">
+                      Crafted with <strong>40% Oil</strong> for deep, powerful scent that lasts
+                  </p>
+              </div>
+          </div>
 
-            <!-- All-Day Strength Card -->
-            <div class="col-md-4 col-lg-4">
-                <div class="card border-0 bg-white text-center h-100 shadow-sm"
-                    style="border-radius: 12px; padding: 2rem 1.5rem; transition: transform 0.3s ease;"
-                    onmouseover="this.style.transform='translateY(-5px)'"
-                    onmouseout="this.style.transform='translateY(0)'">
-                    
-                    <!-- Perfume Bottle Icon -->
-                    <div class="mb-4 d-flex justify-content-center">
-                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #2c3e50, #34495e); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);">
-                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2L14 4H20V6H18L16 8H20V10H18L16 12H20V14H18L16 16H20V18H18L16 20H8L6 18H4V16H6L8 14H4V12H6L8 10H4V8H6L8 6H4V4H10L12 2Z" fill="white"/>
-                                <path d="M10 6H14V8H10V6Z" fill="white"/>
-                                <path d="M10 10H14V12H10V10Z" fill="white"/>
-                                <path d="M10 14H14V16H10V14Z" fill="white"/>
-                            </svg>
-                        </div>
-                    </div>
-                    
-                    <h4 class="fw-bold mb-3" style="font-family: serif; color: #333; font-size: 1.4rem;">
-                        All-Day Strength
-                    </h4>
-                    
-                    <p class="text-muted mb-0" style="line-height: 1.6; font-size: 1rem;">
-                        Enjoy up to 12 hours of lasting fragrance with powerful projection
-                    </p>
-                </div>
-            </div>
+          <!-- All-Day Strength Card -->
+          <div class="col-md-4 col-lg-4">
+              <div class="card border-0 bg-white text-center h-100 shadow-sm"
+                  style="border-radius: 12px; padding: 2rem 1.5rem; transition: transform 0.3s ease;"
+                  onmouseover="this.style.transform='translateY(-5px)'"
+                  onmouseout="this.style.transform='translateY(0)'">
+                  
+                  <!-- Perfume Bottle Icon -->
+                  <div class="mb-4 d-flex justify-content-center">
+                      <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #2c3e50, #34495e); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);">
+                          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M12 2L14 4H20V6H18L16 8H20V10H18L16 12H20V14H18L16 16H20V18H18L16 20H8L6 18H4V16H6L8 14H4V12H6L8 10H4V8H6L8 6H4V4H10L12 2Z" fill="white"/>
+                              <path d="M10 6H14V8H10V6Z" fill="white"/>
+                              <path d="M10 10H14V12H10V10Z" fill="white"/>
+                              <path d="M10 14H14V16H10V14Z" fill="white"/>
+                          </svg>
+                      </div>
+                  </div>
+                  
+                  <h4 class="fw-bold mb-3" style="font-family: serif; color: #333; font-size: 1.4rem;">
+                      All-Day Strength
+                  </h4>
+                  
+                  <p class="text-muted mb-0" style="line-height: 1.6; font-size: 1rem;">
+                      Enjoy up to 12 hours of lasting fragrance with powerful projection
+                  </p>
+              </div>
+          </div>
 
-            <!-- Heat Resistant Card -->
-            <div class="col-md-4 col-lg-4">
-                <div class="card border-0 bg-white text-center h-100 shadow-sm"
-                    style="border-radius: 12px; padding: 2rem 1.5rem; transition: transform 0.3s ease;"
-                    onmouseover="this.style.transform='translateY(-5px)'"
-                    onmouseout="this.style.transform='translateY(0)'">
-                    
-                    <!-- Sun with Thermometer Icon -->
-                    <div class="mb-4 d-flex justify-content-center">
-                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #ffd700, #ffed4e); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);">
-                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="8" fill="#ff6b35"/>
-                                <path d="M12 2L13 4H15L14 6L16 7L15 9L17 10L16 12L18 13L17 15L19 16L18 18L20 19L19 21L21 22L20 20L18 19L19 17L17 16L18 14L16 13L17 11L15 10L16 8L14 7L15 5L13 4L12 2Z" fill="white"/>
-                                <rect x="18" y="2" width="2" height="8" rx="1" fill="#ff4757"/>
-                                <rect x="17" y="8" width="4" height="2" rx="1" fill="#ff4757"/>
-                            </svg>
-                        </div>
+          <!-- Heat Resistant Card -->
+          <div class="col-md-4 col-lg-4">
+              <div class="card border-0 bg-white text-center h-100 shadow-sm"
+                  style="border-radius: 12px; padding: 2rem 1.5rem; transition: transform 0.3s ease;"
+                  onmouseover="this.style.transform='translateY(-5px)'"
+                  onmouseout="this.style.transform='translateY(0)'">
+                  
+                  <!-- Sun with Thermometer Icon -->
+                  <div class="mb-4 d-flex justify-content-center">
+                      <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #ffd700, #ffed4e); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);">
+                          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <circle cx="12" cy="12" r="8" fill="#ff6b35"/>
+                              <path d="M12 2L13 4H15L14 6L16 7L15 9L17 10L16 12L18 13L17 15L19 16L18 18L20 19L19 21L21 22L20 20L18 19L19 17L17 16L18 14L16 13L17 11L15 10L16 8L14 7L15 5L13 4L12 2Z" fill="white"/>
+                              <rect x="18" y="2" width="2" height="8" rx="1" fill="#ff4757"/>
+                              <rect x="17" y="8" width="4" height="2" rx="1" fill="#ff4757"/>
+                          </svg>
+                      </div>
+                  </div>
+                  
+                  <h4 class="fw-bold mb-3" style="font-family: serif; color: #333; font-size: 1.4rem;">
+                      Heat Resistant
+                  </h4>
+                  
+                  <p class="text-muted mb-0" style="line-height: 1.6; font-size: 1rem;">
+                      Perfectly built for Pakistan's hot climate, stays fresh all day
+                  </p>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- All Products Section -->
+<section class="py-5">
+    <div class="container px-4 px-lg-5">
+        <!-- Section Header -->
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <h2 class="fw-light mb-0" style="font-family: serif; font-size: 2.5rem; color: #333; letter-spacing: -0.02em;">
+                All Products
+            </h2>
+            <a href="{% url 'category_summary' %}" class="text-muted text-decoration-none" style="font-size: 1rem; font-weight: 300;">
+                View all
+            </a>
+        </div>
+
+        <!-- All Products -->
+        <div class="position-relative">
+            <!-- Navigation Arrows -->
+            <button class="btn position-absolute" 
+                    style="top: 50%; left: -30px; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 50px; height: 50px; padding: 0; background-color: #fff; border: 2px solid #333; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); transition: all 0.3s ease;"
+                    onclick="scrollAllProducts('left')"
+                    onmouseover="this.style.backgroundColor='#f8f9fa'; this.style.transform='translateY(-50%) scale(1.1)'"
+                    onmouseout="this.style.backgroundColor='#fff'; this.style.transform='translateY(-50%) scale(1)'">
+                <i class="bi bi-chevron-left" style="font-size: 1.2rem; color: #333;"></i>
+            </button>
+            
+            <button class="btn position-absolute" 
+                    style="top: 50%; right: -30px; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 50px; height: 50px; padding: 0; background-color: #fff; border: 2px solid #333; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); transition: all 0.3s ease;"
+                    onclick="scrollAllProducts('right')"
+                    onmouseover="this.style.backgroundColor='#f8f9fa'; this.style.transform='translateY(-50%) scale(1.1)'"
+                    onmouseout="this.style.backgroundColor='#fff'; this.style.transform='translateY(-50%) scale(1)'">
+                <i class="bi bi-chevron-right" style="font-size: 1.2rem; color: #333;"></i>
+            </button>
+
+            <!-- Scrollable Container -->
+            <div class="overflow-hidden">
+                <div id="allProductsContainer" class="d-flex" style="transition: transform 0.3s ease;">
+                    {% for product in products %}
+                    <div class="flex-shrink-0 me-4" style="width: 250px;">
+                        <a href="{% url 'product' product.id %}" class="text-decoration-none text-dark">
+                            <div class="card h-100 border-0 bg-white position-relative"
+                                style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;"
+                                onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 4px 16px rgba(0, 0, 0, 0.15)'"
+                                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.1)'">
+
+                                {% if product.is_on_sale %}
+                                <div class="position-absolute" style="top: 8px; left: 8px; z-index: 2;">
+                                    <span class="badge bg-danger text-white px-2 py-1"
+                                        style="font-size: 0.75rem; border-radius: 4px;">
+                                        Sale
+                                    </span>
+                                </div>
+                                {% endif %}
+
+                                <!-- Product image -->
+                                <div class="position-relative" style="width: 100%; padding-top: 100%; background-color: #f8f9fa;">
+                                    <img class="position-absolute top-0 start-0 w-100 h-100" 
+                                        src="{{ product.image.url }}" alt="{{ product.name }}"
+                                        style="object-fit: cover; border-radius: 8px 8px 0 0;" />
+                                </div>
+
+                                <!-- Product details -->
+                                <div class="card-body p-3 text-center">
+                                    <h5 class="card-title mb-2" style="font-size: 1.1rem; font-weight: 600; color: #333;">
+                                        {{ product.name }}
+                                    </h5>
+
+                                    {% if product.is_on_sale %}
+                                    <div class="mb-2">
+                                        <span class="text-muted text-decoration-line-through me-2" style="font-size: 0.9rem;">
+                                            Rs.{{ product.price }}
+                                        </span>
+                                        <span style="font-size: 1.1rem; color: #333;">
+                                            Rs.{{ product.sale_price }}
+                                        </span>
+                                    </div>
+                                    {% else %}
+                                    <div class="mb-2" style="font-size: 1.1rem; color: #333;">Rs.{{ product.price }}</div>
+                                    {% endif %}
+
+                                    <div class="text-muted" style="font-size: 0.85rem;">
+                                        {{ product.category }}
+                                    </div>
+                                </div>
+
+                                <!-- Add to Cart Button -->
+                                <div class="card-footer bg-transparent border-0 text-center p-3">
+                                    <button class="btn btn-dark btn-sm px-4 py-2 rounded"
+                                        style="font-size: 0.85rem; background-color: #333; border: none;"
+                                        onmouseover="this.style.backgroundColor='#555'"
+                                        onmouseout="this.style.backgroundColor='#333'">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    
-                    <h4 class="fw-bold mb-3" style="font-family: serif; color: #333; font-size: 1.4rem;">
-                        Heat Resistant
-                    </h4>
-                    
-                    <p class="text-muted mb-0" style="line-height: 1.6; font-size: 1rem;">
-                        Perfectly built for Pakistan's hot climate, stays fresh all day
-                    </p>
+                    {% endfor %}
                 </div>
             </div>
         </div>
+
+        <!-- JavaScript for All Products scrolling -->
+        <script>
+            let allCurrentScroll = 0;
+            const allScrollAmount = 270; // 250px card width + 20px margin
+            
+            function scrollAllProducts(direction) {
+                const container = document.getElementById('allProductsContainer');
+                const maxScroll = container.scrollWidth - container.parentElement.clientWidth;
+                
+                if (direction === 'left') {
+                    allCurrentScroll = Math.max(0, allCurrentScroll - allScrollAmount);
+                } else {
+                    allCurrentScroll = Math.min(maxScroll, allCurrentScroll + allScrollAmount);
+                }
+                
+                container.style.transform = `translateX(-${allCurrentScroll}px)`;
+            }
+        </script>
     </div>
 </section>
+
+
 
 
 
