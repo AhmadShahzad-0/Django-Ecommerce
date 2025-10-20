@@ -18,47 +18,49 @@
 
             {% for product in products %}
             <div class="col mb-5">
-                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden"
-                     style="transition: transform 0.3s, box-shadow 0.3s;"
-                     onmouseover="this.style.transform='scale(1.03)'; this.classList.add('shadow-lg')"
-                     onmouseout="this.style.transform='scale(1)'; this.classList.remove('shadow-lg')">
-
-                    {% if product.is_on_sale %}
-                    <!-- Sale badge -->
-                    <span class="badge bg-danger text-white position-absolute m-2 px-3 py-1 fs-6 rounded-pill" style="z-index: 1; top: 10px; right: 10px;">
-                        Sale
-                    </span>
-                    {% endif %}
-
-                    <!-- Product Image -->
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}"
-                         style="height: 250px; object-fit: cover;">
-
-                    <!-- Product Info -->
-                    <div class="card-body text-center px-3 py-4">
-                        <h5 class="fw-bold mb-2">{{ product.name }}</h5>
+                <a href="{% url 'product' product.id %}" class="text-decoration-none text-dark" 
+                   style="display: block; height: 100%;">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden"
+                         style="transition: transform 0.3s, box-shadow 0.3s;"
+                         onmouseover="this.style.transform='scale(1.03)'; this.classList.add('shadow-lg')"
+                         onmouseout="this.style.transform='scale(1)'; this.classList.remove('shadow-lg')">
 
                         {% if product.is_on_sale %}
-                        <div class="mb-1">
-                            <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
-                            <span class="text-danger fw-semibold ms-2">${{ product.sale_price }}</span>
-                        </div>
-                        {% else %}
-                        <div class="fw-semibold mb-1">${{ product.price }}</div>
+                        <!-- Sale badge -->
+                        <span class="badge bg-danger text-white position-absolute m-2 px-3 py-1 fs-6 rounded-pill" style="z-index: 1; top: 10px; right: 10px;">
+                            Sale
+                        </span>
                         {% endif %}
 
-                        <small class="text-muted">{{ product.category }}</small>
+                        <!-- Product Image -->
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}"
+                             style="height: 250px; object-fit: cover;">
+
+                        <!-- Product Info -->
+                        <div class="card-body text-center px-3 py-4">
+                            <h5 class="fw-bold mb-2">{{ product.name }}</h5>
+
+                            {% if product.is_on_sale %}
+                            <div class="mb-1">
+                                <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
+                                <span class="text-danger fw-semibold ms-2">${{ product.sale_price }}</span>
+                            </div>
+                            {% else %}
+                            <div class="fw-semibold mb-1">${{ product.price }}</div>
+                            {% endif %}
+
+                            <small class="text-muted">{{ product.category }}</small>
+                        </div>
+
+                        <!-- CTA Button -->
+                        <div class="card-footer bg-white border-0 text-center pb-4">
+                            <span class="btn btn-dark rounded-pill px-4">
+                                View Product
+                            </span>
+                        </div>
+
                     </div>
-
-                    <!-- CTA Button -->
-                    <!-- CTA Button -->
-<div class="card-footer bg-white border-0 text-center pb-4">
-    <a href="{% url 'product' product.id %}" class="btn btn-dark rounded-pill px-4">
-        View Product
-    </a>
-</div>
-
-                </div>
+                </a>
             </div>
             {% endfor %}
 
