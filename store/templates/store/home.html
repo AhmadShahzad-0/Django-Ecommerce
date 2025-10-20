@@ -76,7 +76,7 @@
             <!-- Scrollable Container -->
             <div class="overflow-hidden">
                 <div id="productsContainer" class="d-flex" style="transition: transform 0.3s ease;">
-                    {% for product in products %}
+            {% for product in products %}
                         {% if product.category.name == "Men's Perfume" %}
                     <div class="flex-shrink-0 me-4" style="width: 250px;">
                         <a href="{% url 'product' product.id %}" class="text-decoration-none text-dark">
@@ -85,45 +85,45 @@
                                 onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 4px 16px rgba(0, 0, 0, 0.15)'"
                                 onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.1)'">
 
-                                {% if product.is_on_sale %}
+                    {% if product.is_on_sale %}
                                 <div class="position-absolute" style="top: 8px; left: 8px; z-index: 2;">
                                     <span class="badge bg-danger text-white px-2 py-1"
                                         style="font-size: 0.75rem; border-radius: 4px;">
-                                        Sale
+                        Sale
                                     </span>
-                                </div>
-                                {% endif %}
+                    </div>
+                    {% endif %}
 
-                                <!-- Product image -->
+                    <!-- Product image -->
                                 <div class="position-relative" style="width: 100%; padding-top: 100%; background-color: #f8f9fa;">
                                     <img class="position-absolute top-0 start-0 w-100 h-100" 
                                         src="{{ product.image.url }}" alt="{{ product.name }}"
                                         style="object-fit: cover; border-radius: 8px 8px 0 0;" />
                                 </div>
 
-                                <!-- Product details -->
+                    <!-- Product details -->
                                 <div class="card-body p-3 text-center">
                                     <h5 class="card-title mb-2" style="font-size: 1.1rem; font-weight: 600; color: #333;">
                                         {{ product.name }}
                                     </h5>
 
-                                    {% if product.is_on_sale %}
+                        {% if product.is_on_sale %}
                                     <div class="mb-2">
                                         <span class="text-muted text-decoration-line-through me-2" style="font-size: 0.9rem;">
                                             Rs.{{ product.price }}
-                                        </span>
+                            </span>
                                         <span style="font-size: 1.1rem; color: #333;">
                                             Rs.{{ product.sale_price }}
-                                        </span>
-                                    </div>
-                                    {% else %}
+                            </span>
+                        </div>
+                        {% else %}
                                     <div class="mb-2" style="font-size: 1.1rem; color: #333;">Rs.{{ product.price }}</div>
-                                    {% endif %}
+                        {% endif %}
 
                                     <div class="text-muted" style="font-size: 0.85rem;">
                                         {{ product.category }}
                                     </div>
-                                </div>
+                    </div>
 
                                 <!-- Add to Cart Button -->
                                 <div class="card-footer bg-transparent border-0 text-center p-3">
@@ -305,9 +305,9 @@
                               <path d="M8.5 14.5L12 11L15.5 14.5L14 16L12 14L10 16L8.5 14.5Z" fill="white"/>
                               <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM12 8C13.1 8 14 8.9 14 10V12C14 13.1 13.1 14 12 14C10.9 14 10 13.1 10 12V10C10 8.9 10.9 8 12 8Z" fill="white"/>
                           </svg>
-                      </div>
-                  </div>
-                  
+      </div>
+    </div>
+
                   <h4 class="fw-bold mb-3" style="font-family: serif; color: #333; font-size: 1.4rem;">
                       Intense Essence
                   </h4>
@@ -373,10 +373,298 @@
                   <p class="text-muted mb-0" style="line-height: 1.6; font-size: 1rem;">
                       Perfectly built for Pakistan's hot climate, stays fresh all day
                   </p>
-              </div>
+          </div>
           </div>
       </div>
   </div>
+</section>
+
+<!-- Body Mist Section -->
+<section class="py-5">
+    <div class="container px-4 px-lg-5">
+        <!-- Section Header -->
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <h2 class="fw-light mb-0" style="font-family: serif; font-size: 2.5rem; color: #333; letter-spacing: -0.02em;">
+                Body Mist
+            </h2>
+            <a href="#" class="text-muted text-decoration-none" style="font-size: 1rem; font-weight: 300;">
+                View all
+            </a>
+        </div>
+
+        <!-- Body Mist Products -->
+        <div class="position-relative">
+            <!-- Navigation Arrows -->
+            <button class="btn position-absolute" 
+                    style="top: 50%; left: -30px; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 50px; height: 50px; padding: 0; background-color: #fff; border: 2px solid #333; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); transition: all 0.3s ease;"
+                    onclick="scrollBodyMistProducts('left')"
+                    onmouseover="this.style.backgroundColor='#f8f9fa'; this.style.transform='translateY(-50%) scale(1.1)'"
+                    onmouseout="this.style.backgroundColor='#fff'; this.style.transform='translateY(-50%) scale(1)'">
+                <i class="bi bi-chevron-left" style="font-size: 1.2rem; color: #333;"></i>
+            </button>
+            
+            <button class="btn position-absolute" 
+                    style="top: 50%; right: -30px; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 50px; height: 50px; padding: 0; background-color: #fff; border: 2px solid #333; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); transition: all 0.3s ease;"
+                    onclick="scrollBodyMistProducts('right')"
+                    onmouseover="this.style.backgroundColor='#f8f9fa'; this.style.transform='translateY(-50%) scale(1.1)'"
+                    onmouseout="this.style.backgroundColor='#fff'; this.style.transform='translateY(-50%) scale(1)'">
+                <i class="bi bi-chevron-right" style="font-size: 1.2rem; color: #333;"></i>
+            </button>
+
+            <!-- Scrollable Container -->
+            <div class="overflow-hidden">
+                <div id="bodyMistProductsContainer" class="d-flex" style="transition: transform 0.3s ease;">
+                    {% for product in products %}
+                        {% if product.category.name == "Body Mist" %}
+                    <div class="flex-shrink-0 me-4" style="width: 250px;">
+                        <a href="{% url 'product' product.id %}" class="text-decoration-none text-dark">
+                            <div class="card h-100 border-0 bg-white position-relative"
+                                style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;"
+                                onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 4px 16px rgba(0, 0, 0, 0.15)'"
+                                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.1)'">
+
+                                {% if product.is_on_sale %}
+                                <div class="position-absolute" style="top: 8px; left: 8px; z-index: 2;">
+                                    <span class="badge bg-danger text-white px-2 py-1"
+                                        style="font-size: 0.75rem; border-radius: 4px;">
+                                        Sale
+                                    </span>
+                                </div>
+                                {% endif %}
+
+                                <!-- Product image -->
+                                <div class="position-relative" style="width: 100%; padding-top: 100%; background-color: #f8f9fa;">
+                                    <img class="position-absolute top-0 start-0 w-100 h-100" 
+                                        src="{{ product.image.url }}" alt="{{ product.name }}"
+                                        style="object-fit: cover; border-radius: 8px 8px 0 0;" />
+                                </div>
+
+                                <!-- Product details -->
+                                <div class="card-body p-3 text-center">
+                                    <h5 class="card-title mb-2" style="font-size: 1.1rem; font-weight: 600; color: #333;">
+                                        {{ product.name }}
+                                    </h5>
+
+                                    {% if product.is_on_sale %}
+                                    <div class="mb-2">
+                                        <span class="text-muted text-decoration-line-through me-2" style="font-size: 0.9rem;">
+                                            Rs.{{ product.price }}
+                                        </span>
+                                        <span style="font-size: 1.1rem; color: #333;">
+                                            Rs.{{ product.sale_price }}
+                                        </span>
+                                    </div>
+                                    {% else %}
+                                    <div class="mb-2" style="font-size: 1.1rem; color: #333;">Rs.{{ product.price }}</div>
+                                    {% endif %}
+
+                                    <div class="text-muted" style="font-size: 0.85rem;">
+                                        {{ product.category }}
+                                    </div>
+                                </div>
+
+                                <!-- Add to Cart Button -->
+                                <div class="card-footer bg-transparent border-0 text-center p-3">
+                                    <button class="btn btn-dark btn-sm px-4 py-2 rounded"
+                                        style="font-size: 0.85rem; background-color: #333; border: none;"
+                                        onmouseover="this.style.backgroundColor='#555'"
+                                        onmouseout="this.style.backgroundColor='#333'">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript for Body Mist scrolling -->
+        <script>
+            let bodyMistCurrentScroll = 0;
+            const bodyMistScrollAmount = 270; // 250px card width + 20px margin
+            
+            function scrollBodyMistProducts(direction) {
+                const container = document.getElementById('bodyMistProductsContainer');
+                const maxScroll = container.scrollWidth - container.parentElement.clientWidth;
+                
+                if (direction === 'left') {
+                    bodyMistCurrentScroll = Math.max(0, bodyMistCurrentScroll - bodyMistScrollAmount);
+                } else {
+                    bodyMistCurrentScroll = Math.min(maxScroll, bodyMistCurrentScroll + bodyMistScrollAmount);
+                }
+                
+                container.style.transform = `translateX(-${bodyMistCurrentScroll}px)`;
+            }
+        </script>
+    </div>
+</section>
+
+<!-- Our Product Collection Section -->
+<section class="py-5">
+    <div class="container px-4 px-lg-5">
+        <!-- Section Header -->
+        <div class="mb-5">
+            <h2 class="fw-light mb-0" style="font-family: serif; font-size: 2.5rem; color: #333; letter-spacing: -0.02em;">
+                Our Product Collection
+            </h2>
+        </div>
+
+        <!-- Product Collection Grid -->
+        <div class="row g-4">
+            <!-- Male Fragrance Card -->
+            <div class="col-md-4 col-lg-4">
+                <a href="#" class="text-decoration-none text-dark">
+                    <div class="card border-0 bg-white position-relative overflow-hidden"
+                        style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; height: 100%;"
+                        onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 4px 16px rgba(0, 0, 0, 0.15)'"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.1)'">
+                        
+                        <!-- Product Image -->
+                        <div class="position-relative" style="width: 100%; padding-top: 120%; background-color: #f8f9fa;">
+                            <img class="position-absolute top-0 start-0 w-100 h-100" 
+                                src="{% static 'assets/DeepOceans.jpg' %}" alt="Male Fragrance"
+                                style="object-fit: cover; border-radius: 8px 8px 0 0;" />
+                        </div>
+                        
+                        <!-- Category Label -->
+                        <div class="card-body p-2 text-center">
+                            <h5 class="card-title mb-0" style="font-size: 1.1rem; font-weight: 500; color: #666;">
+                                Male Fragrance
+                            </h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Female Fragrance Card -->
+            <div class="col-md-4 col-lg-4">
+                <a href="#" class="text-decoration-none text-dark">
+                    <div class="card border-0 bg-white position-relative overflow-hidden"
+                        style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; height: 100%;"
+                        onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 4px 16px rgba(0, 0, 0, 0.15)'"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.1)'">
+                        
+                        <!-- Product Image -->
+                        <div class="position-relative" style="width: 100%; padding-top: 120%; background-color: #f8f9fa;">
+                            <img class="position-absolute top-0 start-0 w-100 h-100" 
+                                src="{% static 'assets/Stella.jpg' %}" alt="Female Fragrance"
+                                style="object-fit: cover; border-radius: 8px 8px 0 0;" />
+                        </div>
+                        
+                        <!-- Category Label -->
+                        <div class="card-body p-2 text-center">
+                            <h5 class="card-title mb-0" style="font-size: 1.1rem; font-weight: 500; color: #666;">
+                                Female Fragrance
+                            </h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Premium Line Card -->
+            <div class="col-md-4 col-lg-4">
+                <a href="#" class="text-decoration-none text-dark">
+                    <div class="card border-0 bg-white position-relative overflow-hidden"
+                        style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; height: 100%;"
+                        onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 4px 16px rgba(0, 0, 0, 0.15)'"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.1)'">
+                        
+                        <!-- Product Image -->
+                        <div class="position-relative" style="width: 100%; padding-top: 120%; background-color: #f8f9fa;">
+                            <img class="position-absolute top-0 start-0 w-100 h-100" 
+                                src="{% static 'assets/ImperialOud.jpg' %}" alt="Premium Line"
+                                style="object-fit: cover; border-radius: 8px 8px 0 0;" />
+                        </div>
+                        
+                        <!-- Category Label -->
+                        <div class="card-body p-2 text-center">
+                            <h5 class="card-title mb-0" style="font-size: 1.1rem; font-weight: 500; color: #666;">
+                                Premium Line
+                            </h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Car Diffuser Card -->
+            <div class="col-md-4 col-lg-4">
+                <a href="#" class="text-decoration-none text-dark">
+                    <div class="card border-0 bg-white position-relative overflow-hidden"
+                        style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; height: 100%;"
+                        onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 4px 16px rgba(0, 0, 0, 0.15)'"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.1)'">
+                        
+                        <!-- Product Image -->
+                        <div class="position-relative" style="width: 100%; padding-top: 120%; background-color: #f8f9fa;">
+                            <img class="position-absolute top-0 start-0 w-100 h-100" 
+                                src="{% static 'assets/TheMyth.jpg' %}" alt="Car Diffuser"
+                                style="object-fit: cover; border-radius: 8px 8px 0 0;" />
+                        </div>
+                        
+                        <!-- Category Label -->
+                        <div class="card-body p-2 text-center">
+                            <h5 class="card-title mb-0" style="font-size: 1.1rem; font-weight: 500; color: #666;">
+                                Car Diffuser
+                            </h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Body Mist Card -->
+            <div class="col-md-4 col-lg-4">
+                <a href="#" class="text-decoration-none text-dark">
+                    <div class="card border-0 bg-white position-relative overflow-hidden"
+                        style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; height: 100%;"
+                        onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 4px 16px rgba(0, 0, 0, 0.15)'"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.1)'">
+                        
+                        <!-- Product Image -->
+                        <div class="position-relative" style="width: 100%; padding-top: 120%; background-color: #f8f9fa;">
+                            <img class="position-absolute top-0 start-0 w-100 h-100" 
+                                src="{% static 'assets/LoveSpell.jpg' %}" alt="Body Mist"
+                                style="object-fit: cover; border-radius: 8px 8px 0 0;" />
+                        </div>
+                        
+                        <!-- Category Label -->
+                        <div class="card-body p-2 text-center">
+                            <h5 class="card-title mb-0" style="font-size: 1.1rem; font-weight: 500; color: #666;">
+                                Body Mist
+                            </h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Hair Mist Card -->
+            <div class="col-md-4 col-lg-4">
+                <a href="#" class="text-decoration-none text-dark">
+                    <div class="card border-0 bg-white position-relative overflow-hidden"
+                        style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; height: 100%;"
+                        onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 4px 16px rgba(0, 0, 0, 0.15)'"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.1)'">
+                        
+                        <!-- Product Image -->
+                        <div class="position-relative" style="width: 100%; padding-top: 120%; background-color: #f8f9fa;">
+                            <img class="position-absolute top-0 start-0 w-100 h-100" 
+                                src="{% static 'assets/StarryNight.jpg' %}" alt="Hair Mist"
+                                style="object-fit: cover; border-radius: 8px 8px 0 0;" />
+                        </div>
+                        
+                        <!-- Category Label -->
+                        <div class="card-body p-2 text-center">
+                            <h5 class="card-title mb-0" style="font-size: 1.1rem; font-weight: 500; color: #666;">
+                                Hair Mist
+                            </h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- All Products Section -->
@@ -459,9 +747,9 @@
 
                                     <div class="text-muted" style="font-size: 0.85rem;">
                                         {{ product.category }}
-                                    </div>
-                                </div>
-
+      </div>
+    </div>
+    
                                 <!-- Add to Cart Button -->
                                 <div class="card-footer bg-transparent border-0 text-center p-3">
                                     <button class="btn btn-dark btn-sm px-4 py-2 rounded"
@@ -476,8 +764,8 @@
                     </div>
                     {% endfor %}
                 </div>
-            </div>
-        </div>
+  </div>
+</div>
 
         <!-- JavaScript for All Products scrolling -->
         <script>
@@ -499,6 +787,7 @@
         </script>
     </div>
 </section>
+
 
 
 
