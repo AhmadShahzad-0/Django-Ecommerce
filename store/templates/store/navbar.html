@@ -73,19 +73,23 @@
   <div class="border-top d-none d-md-block">
     <div class="container-fluid py-2 d-flex justify-content-center gap-4 flex-wrap">
       <a class="nav-link text-dark fw-semibold" href="{% url 'home' %}">Home</a>
-      <a class="nav-link text-dark fw-semibold" href="{% url 'about' %}">About</a>
 
       <!-- Categories Dropdown -->
       <div class="dropdown">
         <a class="nav-link dropdown-toggle text-dark fw-semibold" href="#" data-bs-toggle="dropdown">
-          Categories
+          Shop
         </a>
         <ul class="dropdown-menu shadow-sm border-0 rounded-3 animate__animated animate__fadeIn">
-          <li><a class="dropdown-item" href="{% url 'category_summary' %}">🛍️ All Products</a></li>
-          <li><a class="dropdown-item" href="{% url 'category' "Men's-Perfume" %}">👔 Men's Perfume</a></li>
-          <li><a class="dropdown-item" href="{% url 'category' "Women's-Perfume" %}">💄 Women's Perfume</a></li>
+          <li><a class="dropdown-item" href="{% url 'category_summary' %}"> All Products</a></li>
+          <li><a class="dropdown-item" href="{% url 'category' "Men's-Perfume" %}">Men's Perfume</a></li>
+          <li><a class="dropdown-item" href="{% url 'category' "Women's-Perfume" %}">Women's Perfume</a></li>
+          <li><a class="dropdown-item" href="{% url 'category' "Body-Mist" %}">Body Mist</a></li>
+          <li><a class="dropdown-item" href="{% url 'category' "Car-Diffuser" %}">Car Diffuser</a></li>
+          <li><a class="dropdown-item" href="{% url 'category' "Hair-Mist" %}">Hair Mist</a></li>
         </ul>
       </div>
+
+      <a class="nav-link text-dark fw-semibold" href="{% url 'about' %}">About</a>
 
       {% if user.is_authenticated and user.is_superuser %}
       <!-- Orders Dropdown -->

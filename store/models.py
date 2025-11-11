@@ -37,7 +37,7 @@ class Category(models.Model):
         return self.name
 
     class Meta:
-        verbose_name_plural = 'Categories'    
+        verbose_name_plural = 'Categories'
 
 class Customer(models.Model):
     first_name = models.CharField(max_length=50)
@@ -54,7 +54,7 @@ class Product(models.Model):
     description = models.TextField(max_length=250, default='', blank=True, null=True)
     price = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField(default=0)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=2)
     image = models.ImageField(upload_to='uploads/products/', blank=True, null=True)
     #Add sale 
     is_on_sale = models.BooleanField(default=False)
